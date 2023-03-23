@@ -1,4 +1,6 @@
 import streamlit as st
+from streamlit_extras.app_logo import add_logo
+from streamlit_extras.add_vertical_space import add_vertical_space
 
 st.set_page_config(
     page_title="Multi-model Benchmark",
@@ -11,7 +13,7 @@ st.set_page_config(
         # 'About': "# This is a header. This is an *extremely* cool app!"
     }
 )
-
+add_logo("http://placekitten.com/120/120")
 st.write("# Multi Modal Benchmark! 👋")
 st.sidebar.markdown('''
 # Multi Modal Benchmark! 👋
@@ -26,6 +28,8 @@ st.markdown(
     So it's a good time to utilize the existing multi-modality SSL model to build a benchmark for video with audio/speech.
     """
 )
+add_vertical_space(2)
+
 st.subheader("Plan", anchor="plan")
 st.markdown(
     """
@@ -33,6 +37,7 @@ st.markdown(
     Below show the possible selection of the SSL models and tasks.
     """
 )
+add_vertical_space(2)
 
 st.subheader("Models", anchor="models")
 # TODO: add models
