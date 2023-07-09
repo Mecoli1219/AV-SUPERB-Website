@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_extras.app_logo import add_logo
 from streamlit_extras.add_vertical_space import add_vertical_space
+from streamlit_extras.colored_header import colored_header
 
 st.set_page_config(
     page_title="Multi-model Benchmark",
@@ -14,12 +15,19 @@ st.set_page_config(
     }
 )
 add_logo("http://placekitten.com/120/120")
+
 st.write("# Multi Modal Benchmark! 👋")
+
 st.sidebar.markdown('''
 # Multi Modal Benchmark! 👋
 ''', unsafe_allow_html=True)
 
-st.subheader("Motivation", anchor="motivation")
+
+colored_header(
+    label="Motivation",
+    description="",
+    color_name="violet-70",
+)
 st.markdown(
     """
     In the video-text field, there is already a benchmark for research to test the capability of their models. 
@@ -30,7 +38,12 @@ st.markdown(
 )
 add_vertical_space(2)
 
-st.subheader("Plan", anchor="plan")
+# st.subheader("Plan", anchor="plan")
+colored_header(
+    label="Plan",
+    description="",
+    color_name="violet-70",
+)
 st.markdown(
     """
     Given existing multi-modality SSL models, we can select different multi-modality tasks and test SSL models on them. 
@@ -39,7 +52,12 @@ st.markdown(
 )
 add_vertical_space(2)
 
-st.subheader("Models", anchor="models")
+# st.subheader("Models", anchor="models")
+colored_header(
+    label="Models",
+    description="",
+    color_name="violet-70",
+)
 # TODO: add models
 models = ["AV-HubBERT", "RepLAI", "XDC", "MAViL"]
 model_descriptions = [
@@ -123,5 +141,3 @@ tabs = st.tabs(models)
 for i in range(len(tabs)):
     with tabs[i]:
         st.markdown(model_descriptions[i])
-
-
