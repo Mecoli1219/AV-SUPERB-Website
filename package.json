@@ -1,0 +1,14 @@
+{
+  "name": "Multi-Modality-Benchmark",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm --dir frontend dev",
+    "backend": "cd backend && python3 app.py",
+    "db": "docker-compose up -d"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
