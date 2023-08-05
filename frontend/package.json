@@ -1,0 +1,37 @@
+{
+    "name": "mecoli1219",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "export": "next export",
+        "deploy": "rm -rf node_modules/.cache && next build && next export && touch out/.nojekyll && git add out/ && git commit -m \"Deploy Next.js to gh-pages\" && git subtree push --prefix out origin gh-pages"
+    },
+    "dependencies": {
+        "@leecheuk/react-google-login": "^5.4.1",
+        "@react-oauth/google": "^0.11.0",
+        "@types/node": "18.11.10",
+        "@types/react": "18.0.25",
+        "@types/react-dom": "18.0.9",
+        "@types/three": "^0.146.0",
+        "axios": "^1.4.0",
+        "eslint": "8.28.0",
+        "eslint-config-next": "13.0.5",
+        "next": "13.0.5",
+        "next-auth": "^4.22.1",
+        "next-themes": "^0.2.1",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "three": "^0.147.0",
+        "typescript": "4.9.3"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.13",
+        "next-transpile-modules": "^10.0.0",
+        "postcss": "^8.4.19",
+        "tailwindcss": "^3.2.4"
+    }
+}
