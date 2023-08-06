@@ -1,6 +1,3 @@
-# Google Login related
-GOOGLE_CLIENT_ID: "259630126101-vtkt9dlu1ohi1bkghh4c80rbuqjdsofo.apps.googleusercontent.com"
-
 #Upload Related
 UPLOAD_DIR: "./upload"
 

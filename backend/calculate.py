@@ -17,6 +17,7 @@ from config import configs
 import csv
 from pathlib import Path
 from sacrebleu.metrics import BLEU
+from db import SQL_URI
 
 def read_file(path, callback=lambda x: x, sep=" ", default_value=""):
     content = {}
@@ -41,9 +42,7 @@ def set_error_msg(session, file_model, error_msg):
 
 def metric_calculate_pipeline(file_path, submitUUID):
     #  connect in memory sqlite database or you can connect your own database
-    load_dotenv()
-    engine = create_engine(os.getenv('SQLALCHEMY_DATABASE_URI',
-                           default="mysql+pymysql://root:root@127.0.0.1:3306/superb"))
+    engine = create_engine(SQL_URI)
 
     # create session and bind engine
     Session = sessionmaker(bind=engine)

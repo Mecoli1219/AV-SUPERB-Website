@@ -10,6 +10,8 @@ from models.hiddenfile import HiddenFileModel
 from utils import get_AOE_today, get_AOE_week, check_admin_credential
 import google_token
 from config import configs
+from dotenv import load_dotenv
+import os
 
 
 class UserInfo(Resource):
@@ -70,8 +72,9 @@ class UserLogin(Resource):
             token = request.get_json()['id_token']
 
             try:
+                load_dotenv()
                 identity = google_token.validate_id_token(
-                    token, configs['GOOGLE_CLIENT_ID'])
+                    token, os.getenv('GOOGLE_CLIENT_ID'))
             except ValueError:
                 return {"message": 'Invalid Google ID token'}, HTTPStatus.FORBIDDEN
 

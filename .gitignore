@@ -130,3 +130,6 @@ dmypy.json
 
 .streamlit/
 .DS_Store
+
+frontend/.env.local
+backend/.env
