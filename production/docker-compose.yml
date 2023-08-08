@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: av-superb-nginx
+    container_name: av-superb-nginx
+    hostname: av-superb-nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8081:80"
+    networks:
+      - av-superb
+    depends_on:
+      - backend
+      - frontend
+  frontend:
+    image: av-superb-frontend
+    container_name: av-superb-frontend
+    build:
+      content: ../
+      dockerfile: production/frontend/Dockerfile
+    expose:
+      - 3000
+    networks:
+      - av-superb
+    depends_on:
+      - backend
+  backend:
+    image: av-superb-backend
+    container_name: av-superb-backend
+    build:
+      content: ./backend
+      dockerfile: Dockerfile
+    expose:
+      - 5000
+    networks:
+      - av-superb
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0
+    container_name: av-superb-mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "mysqlrootpasswd"
+      MYSQL_DATABASE: "avsuperb"
+      MYSQL_USER: "av-superb"
+      MYSQL_PASSWORD: "mysqlpasswd"
+    expose:
+      - 3306
+    networks:
+      - av-superb
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  networks:
+    av-superb:
+      external:
+        name: av-superb
+  volumes:
+    mysql-data:
