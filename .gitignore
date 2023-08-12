@@ -134,3 +134,4 @@ dmypy.json
 frontend/.env.local
 backend/.env
 backend/inference
+production/docker-compose.yml
