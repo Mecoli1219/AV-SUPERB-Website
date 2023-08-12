@@ -61,7 +61,7 @@ services:
 
 networks:
   av-superb:
-    external:
-      name: av-superb
+    name: av-superb
+    external: true
 volumes:
   mysql-data:
