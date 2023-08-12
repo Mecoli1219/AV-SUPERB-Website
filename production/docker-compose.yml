@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.4'
 
 services:
   nginx:
@@ -9,17 +9,18 @@ services:
       context: ./nginx
       dockerfile: Dockerfile
     ports:
-      - "8081:80"
+      - "3000:80"
     networks:
       - av-superb
     depends_on:
       - backend
       - frontend
+
   frontend:
     image: av-superb-frontend
     container_name: av-superb-frontend
     build:
-      content: ../
+      context: ../
       dockerfile: production/frontend/Dockerfile
     expose:
       - 3000
@@ -27,18 +28,20 @@ services:
       - av-superb
     depends_on:
       - backend
+
   backend:
     image: av-superb-backend
     container_name: av-superb-backend
     build:
-      content: ./backend
-      dockerfile: Dockerfile
+      context: ../
+      dockerfile: production/backend/Dockerfile
     expose:
       - 5000
     networks:
       - av-superb
     depends_on:
       - db
+
   db:
     image: mysql:8.0
     container_name: av-superb-mysql
@@ -56,9 +59,9 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
 
-  networks:
-    av-superb:
-      external:
-        name: av-superb
-  volumes:
-    mysql-data:
+networks:
+  av-superb:
+    external:
+      name: av-superb
+volumes:
+  mysql-data:

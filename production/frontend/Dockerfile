@@ -22,6 +22,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY ./frontend .
 # This will do the trick, use the corresponding env file for each environment.
 COPY ./frontend/.env.production .env.production
+COPY ./frontend/.env.local .env
 RUN yarn build
 
 # 3. Production image, copy all the files and run next

@@ -46,13 +46,14 @@ export default function Navbar() {
           >
             <div className="p-5 bg-white dark:bg-gray-800 rounded-lg shadow-md space-y-2">
               {
-                items.map((item) => {
+                items.map((item, index) => {
                   return <Link
                     href={item[1]}
                     className={`text-base hover:bg-white hover:shadow-lg px-3 py-2 rounded-lg border border-transparent ${router.asPath === item[1]
                       ? "block text-gray-800 font-bold"
                       : "block text-gray-600 font-normal "
                       }`}
+                    key={index}
                   >
                     {item[0]}
                   </Link>
