@@ -15,6 +15,7 @@
     MYSQL_PASSWORD:
     ```
 - Modify ```./backend/.env``` regarding to the setting in previous step
+  - ```SQL_HOST="av-superb-mysql"```
 - Modify ```./frontend/.env.local``` environment variables:
 
 ## Run
