@@ -27,6 +27,7 @@ module.exports = {
       maxHeight: {
         "80screen": '80vh',
         "screen": '100vh',
+        "90screen": "90vh"
       },
       margin: {
         "10vh": "10vh",
@@ -35,6 +36,12 @@ module.exports = {
         "80screen": "80vw",
         "70screen": "70vw",
         "60screen": "60vw",
+      },
+      zIndex: {
+        "60": "60"
+      },
+      divideWidth: {
+        '1': '1px',
       }
     },
     minHeight: {

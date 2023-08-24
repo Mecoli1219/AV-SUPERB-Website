@@ -776,11 +776,11 @@ const LeaderBoard = () => {
         setLeaderboardShownData(sortData(leaderboardData.filter(displayRules)));
     }, [sortKey, leaderboardData]);
 
-    return <div className="relative overflow-x-auto mt-0 shadow-md sm:rounded-lg max-h-80screen">
+    return <div className="relative overflow-x-auto mt-0 shadow-md sm:rounded-lg max-h-90screen">
         <table className="sm:rounded-lg w-full text-sm text-center align-middle text-gray-500 whitespace-nowrap border-separate border-spacing-0">
             <thead className=" text-md text-gray-700 sm:rounded-lg ">
                 <tr>
-                    <th scope="col" className="px-6 py-3 bg-gray-100 sticky top-0 left-0 z-20 border-r border-b hover:bg-gray-200 cursor-pointer"
+                    <th scope="col" className="px-6 py-3 bg-gray-100 sticky top-0 left-0 z-10 border-r border-b hover:bg-gray-200 cursor-pointer"
                         onClick={() => changeSortKey("submitName", -1)}>
                         Methods
                     </th>

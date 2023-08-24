@@ -21,7 +21,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
       <SessionProvider session={session}>
 
         <Head>
-          <title>Multi-Modal Superb</title>
+          <title>AV-SUPERB</title>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta name="theme-color" content="#000000" />
           <meta
@@ -30,8 +30,8 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
           />
           <meta property="og:image" content="/brand.png" />
           <meta property="og:image:type" content="image/png" />
-          <meta property="og:url" content="superbbenchmark.org" />
-          <meta property="og:title" content="SUPERB: Speech processing Universal PERformance Benchmark" />
+          <meta property="og:url" content="av.superbbenchmark.org" />
+          <meta property="og:title" content="AV-SUPERB: Audio-Visual Speech and audio processing Universal PERformance Benchmark" />
           <meta property="og:description" content="A comprehensive and reproducible benchmark for Self-supervised Speech Representation Learning" />
           <meta http-equiv="Permissions-Policy" content="interest-cohort=()"></meta>
         </Head>

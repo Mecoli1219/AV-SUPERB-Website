@@ -3,11 +3,12 @@ version: '3.8'
 services:
   db:
     image: mysql:8.0
+    container_name: av-superb-dev-db
     command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: "rootpasswd"
-      MYSQL_DATABASE: "av-superb-benchmark"
+      MYSQL_DATABASE: "avsuperb"
       MYSQL_USER: "av-superb"
-      MYSQL_PASSWORD: "password"
+      MYSQL_PASSWORD: "mysqlpassword"
     ports:
       - "3306:3306"
