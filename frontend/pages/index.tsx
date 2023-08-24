@@ -24,7 +24,7 @@ function Home() {
           </div>
           <div className="mt-12 text-sm space-y-3 font-light">
             <p><strong><a href={subscribe_link} target="_blank" rel="noopener noreferrer" className="underline text-blue-400">Subscribe</a></strong> our e-news to receive all the latest information about SUPERB or <strong>contact us</strong> via</p>
-            <p><strong><a href="mailto:superb.announcement@gmail.com" target="_blank" className="underline text-blue-400">superb.announcement@gmail.com</a></strong></p>
+            <p><strong><a href="mailto:superb.announcement@gmail.com" target="_blank" rel="noopener noreferrer" className="underline text-blue-400">superb.announcement@gmail.com</a></strong></p>
           </div>
           <div className="mt-12 font-light text-sm space-y-2">
             <p className="text-xl">
@@ -32,7 +32,7 @@ function Home() {
                 AV-SUPERB Challenge Timeline
               </strong>
             </p>
-            <Link href="/leaderboard" target="_blank" className="underline text-blue-400">Challenge Policy</Link>
+            <Link href="/leaderboard" target="_blank" rel="noopener noreferrer" className="underline text-blue-400">Challenge Policy</Link>
           </div>
           <ul className="list-disc w-5/6 md:w-4/6 xl:w-3/6 mx-auto text-left font-light text-sm mt-6">
             <li><strong className="italic">Mar 2, 2022</strong>: <Link
@@ -47,19 +47,19 @@ function Home() {
             </li>
             <li><strong className="italic">Jul 15, 2022</strong>: <a
               href="https://slt2022.org/" target="_blank"
-              rel="noopener" className="underline text-blue-400">
+              rel="noopener noreferrer" className="underline text-blue-400">
               SLT workshop
             </a> paper submission (encouraged)</li>
             <li><strong className="italic">Sep 30, 2022</strong>: <a
               href="https://slt2022.org/" target="_blank"
-              rel="noopener" className="underline text-blue-400">
+              rel="noopener noreferrer" className="underline text-blue-400">
               SLT workshop
             </a> paper notification
             </li>
             <li><strong className="italic">Nov 1, 2022</strong>: System description paper deadline</li>
             <li><strong className="italic">Dec 20, 2022</strong>: Challenge result and invitee announcement</li>
             <li><strong className="italic">Jan 9 - 12, 2023: </strong><a href="https://slt2022.org/" target="_blank"
-              rel="noopener">SLT workshop</a> presentation</li>
+              rel="noopener noreferrer">SLT workshop</a> presentation</li>
           </ul>
 
           <div className="mt-12 font-light text-base space-y-2 w-5/6 mx-auto text-left">
