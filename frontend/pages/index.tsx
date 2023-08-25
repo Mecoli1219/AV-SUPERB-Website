@@ -137,7 +137,7 @@ function Home() {
 
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 md:grid-cols-3 xl:grid-cols-3 mt-20 space-y-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 md:grid-cols-3 xl:grid-cols-3 mt-16 space-y-5">
             {CONTRIBUTORS.map((item) => {
               return <div key={item[0]} className="flex justify-center items-center m-auto">
                 <a href={item[1]} target="_blank" rel="noopener noreferrer">
@@ -148,10 +148,10 @@ function Home() {
           </div>
           <div className="divide-y-1 w-full md:w-5/6 m-auto">
 
-            <div className="text-3xl md:text-4xl font-light py-5 text-center mt-24">
+            <div className="text-3xl md:text-4xl font-light py-5 text-center mt-20">
               Acknowledgement
             </div>
-            <div className="py-5 px-5">
+            <div className="py-8 px-5 text-base font-light">
               We thank <a
                 href="https://mecoli1219.github.io/"
                 target="_blank" rel="noopener noreferrer"
@@ -173,7 +173,7 @@ function Home() {
               </a> for creating and maintaining the SUPERB official website.
             </div>
           </div>
-          <div className="h-24"></div>
+          <div className="h-12"></div>
         </div>
       </section>
     </>

@@ -1,56 +1,5 @@
-import axios from "axios"
 import { useState, useEffect } from "react";
-import getConfig from 'next/config'
-
-enum Task {
-    CONSTRAINED = "CONSTRAINED",
-    UNCONSTRAINED = "UNCONSTRAINED",
-    LESS_CONSTRAINED = "LESS_CONSTRAINED",
-}
-
-interface Submission {
-    name: string;
-    aoeTimeUpload: string;
-    task: Task;
-    submitName: string;
-    modelDesc: string;
-    stride: number;
-    inputFormat: string;
-    fineTunedParam?: string,
-    taskSpecParam?: string,
-    corpus?: string;
-    macsShort: number;
-    macsMedium: number;
-    macsLong: number;
-    macsLonger: number;
-    macs: number;
-    paramShared: number;
-    PR_per_public: number;
-    KS_acc_public: number;
-    IC_acc_public: number;
-    SID_acc_public: number;
-    ER_acc_public: number;
-    ERfold1_acc_public: string | number;
-    ERfold2_acc_public: string | number;
-    ERfold3_acc_public: string | number;
-    ERfold4_acc_public: string | number;
-    ERfold5_acc_public: string | number;
-    ASR_wer_public: number;
-    ASR_LM_wer_public: number;
-    QbE_mtwv_public: number;
-    SF_f1_public: number;
-    SF_cer_public: number;
-    SV_eer_public: number;
-    SD_der_public: number;
-    ST_bleu_public: number;
-    SE_pesq_public: number;
-    SE_stoi_public: number;
-    SS_sisdri_public: number;
-}
-
-type LeaderBoardResponse = {
-    leaderboard: Submission[];
-}
+import { getLeaderboard, LeaderBoardResponse, Submission, Task } from "../hooks";
 
 const LEADERBOARD: Submission[] = [
     {
@@ -628,8 +577,6 @@ const SHOWN_VALUES: [keyof Submission, string, boolean, number][] = [
     ["ER_acc_public", "ER", true, 1],
 ]
 
-const { publicRuntimeConfig } = getConfig();
-const BACKEND_URL = publicRuntimeConfig.BACKEND_URL;
 
 const LeaderBoard = () => {
     const [leaderboardData, setLeaderboardData] = useState<Submission[]>(LEADERBOARD);
@@ -696,80 +643,15 @@ const LeaderBoard = () => {
         }
     };
 
-    // const all_not_nan = (submission: Submission) => {
-    //     for (let accessor of hidden_dev_set) {
-    //         if (!is_number_and_not_nan(submission[accessor])) {
-    //             return false;
-    //         }
-    //     }
-    //     return true;
-    // }
-    const getLeaderboard = async () => {
-        await axios
-            .get(`${BACKEND_URL}/api/submission/leaderboard`)
-            .then((res) => {
-                const data = res.data as LeaderBoardResponse;
-                setLeaderboardData(data.leaderboard);
-                setLeaderboardShownData(data.leaderboard.filter(displayRules));
-            })
+    useEffect(() => {
+        getLeaderboard().then((res) => {
+            const data = res.data as LeaderBoardResponse;
+            setLeaderboardData(data.leaderboard);
+            setLeaderboardShownData(data.leaderboard.filter(displayRules));
+        })
             .catch((error) => {
                 console.error(error);
-            });
-
-        // await axios({
-        //     method: "get",
-        //     url: `${BACKEND_URL}/api/hiddensubmission/leaderboard`,
-        // })
-        //     .then((res) => {
-        //         const data = res.data as LeaderBoardResponse;
-        //         let leaderboardData = data.leaderboard;
-
-        //         leaderboardData = leaderboardData.filter(all_not_nan);
-
-        //         if (leaderboardData.length > 0) {
-        //             let newShownData = []
-        //             let names = new Set(leaderboardData.map(data => data.name));
-        //             for (let name of names) {
-        //                 let submissions = leaderboardData.filter(data => data.name === name);
-
-        //                 if (submissions.length < 1) {
-        //                     continue;
-        //                 }
-        //                 if (name.includes("baseline")) {
-        //                     newShownData.push(...submissions);
-        //                     continue;
-        //                 }
-
-        //                 let userEmail = auth.email;
-        //                 for (let submission of submissions) {
-        //                     if (submission.email != userEmail) {
-        //                         submission.name = "-";
-        //                         submission.submitName = "-";
-        //                         submission.modelDesc = "-";
-        //                     }
-        //                 }
-
-        //                 let selected = submissions.reduce((a, b) => (a.showOnLeaderboard === "YES") || (b.showOnLeaderboard === "YES"), {
-        //                     showOnLeaderboard: false,
-        //                 })
-        //                 if (selected) {
-        //                     newShownData.push(...submissions.filter(data => data.showOnLeaderboard));
-        //                 }
-        //                 else {
-        //                     newShownData.push(...submissions);
-        //                 }
-        //             }
-        //             setLeaderboardHiddenData(newShownData);
-        //             setLeaderboardHiddenShownData(newShownData);
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         console.error(error);
-        //     });
-    };
-
-    useEffect(() => {
-        getLeaderboard();
+            });;
     }, []);
 
     useEffect(() => {

@@ -11,6 +11,9 @@ dependencies:
   '@react-oauth/google':
     specifier: ^0.11.0
     version: 0.11.0(react-dom@18.2.0)(react@18.2.0)
+  '@types/is-github-url':
+    specifier: ^1.2.0
+    version: 1.2.0
   '@types/node':
     specifier: 18.11.10
     version: 18.11.10
@@ -47,6 +50,9 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-hook-form:
+    specifier: ^7.45.4
+    version: 7.45.4(react@18.2.0)
   three:
     specifier: ^0.147.0
     version: 0.147.0
@@ -320,6 +326,10 @@ packages:
     resolution: {integrity: sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==}
     dependencies:
       tslib: 2.4.1
+    dev: false
+
+  /@types/is-github-url@1.2.0:
+    resolution: {integrity: sha512-3aweEvZhKGPPFrbLazaMFdYkwG1tcAPVPqDbfqSRIKJXkQEzHDpPww/ARl9tcTQoyQfdU3Ep1ffhC1mkvMqd1Q==}
     dev: false
 
   /@types/json5@0.0.29:
@@ -2122,6 +2132,15 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-hook-form@7.45.4(react@18.2.0):
+    resolution: {integrity: sha512-HGDV1JOOBPZj10LB3+OZgfDBTn+IeEsNOKiq/cxbQAIbKaiJUe/KV8DBUzsx0Gx/7IG/orWqRRm736JwOfUSWQ==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-is@16.13.1:
