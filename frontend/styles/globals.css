@@ -38,6 +38,10 @@ strong {
     transform: scaleX(1);
 }
 
+.md-input:focus~.md-input-description {
+    display: block;
+}
+
 .md-input:hover~.md-input-underline {
     border-bottom: 2px solid;
     border-top: 0px;

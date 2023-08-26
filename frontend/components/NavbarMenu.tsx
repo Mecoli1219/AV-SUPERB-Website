@@ -27,6 +27,7 @@ export const NavbarMenu = ({ setOpenMenu, items }: NavbarMenuProps) => {
                             : "block text-gray-600 font-normal "
                             }`}
                         key={index}
+                        onClick={() => setOpenMenu(false)}
                     >
                         {item[0]}
                     </Link>

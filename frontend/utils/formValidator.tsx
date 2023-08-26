@@ -1,6 +1,6 @@
-import isGithubUrl from "is-github-url";
+// import isGithubUrl from "is-github-url";
 import { IFormValues } from "../hooks/submit";
-type FormValue = {
+export type FormValue = {
     required?: string;
     maxLength?: {
         value: number;
@@ -9,11 +9,8 @@ type FormValue = {
     validate?: {
         fileType?: (fileList: FileList) => boolean | string;
         fileSize?: (fileList: FileList) => boolean | string;
-        isGithub?: (url: string) => boolean | string;
+        // isGithub?: (url: string) => boolean | string;
     }
-};
-type FormValues = {
-    [key in keyof IFormValues]: FormValue;
 };
 
 const validNumber = (inputtxt: string) => {
@@ -27,7 +24,7 @@ const validNumber = (inputtxt: string) => {
     }
 };
 
-const formVal: FormValues = {
+const formVal = {
     submitName: {
         required: "This field is requied.",
         maxLength: {
@@ -36,10 +33,10 @@ const formVal: FormValues = {
         },
     },
     modelURL: {
-        validate: {
-            isGithub: (url: string) =>
-                !url || isGithubUrl(url) ? true : "Invalid Github URL",
-        },
+        // validate: {
+        //     isGithub: (url: string) =>
+        //         !url || isGithubUrl(url) ? true : "Invalid Github URL",
+        // },
     },
     modelDesc: {
         required: "This field is required",
@@ -48,17 +45,17 @@ const formVal: FormValues = {
             message: "Submission name should not excced 300 charaters",
         },
     },
-    // file: {
-    //     required: "No file selected",
-    //     validate: {
-    //         fileType: (fileList: FileList) =>
-    //             (fileList[0].type === "application/zip" || fileList[0].type === "application/x-zip-compressed" || fileList[0].type === "application/x-zip")
-    //                 ? true
-    //                 : "Wrong file format",
-    //         fileSize: (fileList: FileList) =>
-    //             fileList[0]?.size < 50 * 1024 * 1024 ? true : "File too large",
-    //     },
-    // },
-};
+    file: {
+        required: "No file selected",
+        validate: {
+            fileType: (fileList: FileList) =>
+                (fileList[0].type === "application/zip" || fileList[0].type === "application/x-zip-compressed" || fileList[0].type === "application/x-zip")
+                    ? true
+                    : "Wrong file format",
+            fileSize: (fileList: FileList) =>
+                fileList[0]?.size < 50 * 1024 * 1024 ? true : "File too large",
+        },
+    }
+}
 
 export { formVal };

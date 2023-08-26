@@ -5,6 +5,7 @@ export interface IFormValues {
     submitName: string,
     modelDesc: string,
     modelURL: string,
+    file: FileList,
 }
 export const postSubmit = async (submission: IFormValues, token: string) => await
     axios.post("/api/submission", submission, { headers: { 'Authorization': 'Bearer ' + token } });
