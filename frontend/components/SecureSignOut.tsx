@@ -7,10 +7,10 @@ export const SecureSignOut = () => {
     return <>
         {
             confirmMenu && <div className="absolute">
-                <div className="fixed flex top-0 left-0 right-0 w-full h-screen z-50 bg-black bg-opacity-70"
+                <div className="fixed flex top-0 left-0 right-0 w-full h-screen z-nav-3 bg-black bg-opacity-70"
                     onClick={() => setConfirmMenu(false)}
                 >
-                    <div onClick={(e) => e.stopPropagation()} className="m-auto px-5 pt-5 pb-3 bg-white dark:bg-gray-800 rounded-lg shadow-md z-60">
+                    <div onClick={(e) => e.stopPropagation()} className="m-auto px-5 pt-5 pb-3 bg-white dark:bg-gray-800 rounded-lg shadow-md z-nav-4">
                         <div className="text-gray-800 font-bold text-lg py-2">Are you sure you want to logout?</div>
                         <div className="flex flex-row-reverse justify-between items-center">
                             <button

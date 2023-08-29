@@ -14,10 +14,10 @@ export const NavbarMenu = ({ setOpenMenu, items }: NavbarMenuProps) => {
     const router = useRouter();
     const { data: session } = useSession()
 
-    return <div className="fixed top-0 left-0 right-0 w-full h-screen z-30 bg-black bg-opacity-50"
+    return <div className="fixed top-0 left-0 right-0 w-full h-screen z-nav-1 bg-black bg-opacity-50"
         onClick={() => setOpenMenu(false)}
     >
-        <div onClick={(e) => e.stopPropagation()} className="p-5 bg-white dark:bg-gray-800 rounded-lg shadow-md space-y-2 z-40">
+        <div onClick={(e) => e.stopPropagation()} className="p-5 bg-white dark:bg-gray-800 rounded-lg shadow-md space-y-2 z-nav-2">
             {
                 items.map((item, index) => {
                     return <Link

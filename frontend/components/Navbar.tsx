@@ -47,7 +47,7 @@ export default function Navbar() {
       <div className="relative top-0">
         <div className={`transition-top duration-500 shadow-nav ${visible
           ? "bg-white max-w-full mx-auto px-10 md:px-20 py-2 h-16 fixed top-0 left-0 right-0"
-          : "bg-white max-w-full mx-auto px-10 md:px-20 py-2 h-16 fixed -top-32 left-0 right-0"} z-20`}>
+          : "bg-white max-w-full mx-auto px-10 md:px-20 py-2 h-16 fixed -top-32 left-0 right-0"} z-nav`}>
           <div className="flex md:flex-row justify-between items-center space-x-10">
             <div className="flex flex-col ">
               <Link href="/" className="hover:bg-white hover:shadow-lg rounded-lg border border-transparent w-fit">
