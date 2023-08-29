@@ -178,6 +178,7 @@ const LoginSubmit = ({ token }: { token: string }) => {
 
             </form>
         </div>
+        <div className="mt-12"></div>
     </div>
 }
 

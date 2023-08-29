@@ -36,7 +36,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
           <meta http-equiv="Permissions-Policy" content="interest-cohort=()"></meta>
         </Head>
 
-        <div className="bg-[#F1F1F1] mt-0 dark:bg-gray-900 font-sans text-gray-500">
+        <div className="bg-white mt-0 font-sans text-gray-500 -z-50">
           <Navbar />
           {Component.adminOnly ? (
             <ProtectedLayout>
