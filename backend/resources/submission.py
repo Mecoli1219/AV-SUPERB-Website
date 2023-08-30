@@ -153,7 +153,7 @@ class LeaderBoard(Resource):
             for single_info, name in zip(submission_info, submission_names):
                 single_info.update({"name": name})
 
-            leaderboard_default_data += submission_info
+            leaderboard_default_data["audioOnly"] += submission_info
 
             return {"leaderboard": leaderboard_default_data}, HTTPStatus.OK
 

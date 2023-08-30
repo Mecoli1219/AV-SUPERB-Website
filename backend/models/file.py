@@ -11,13 +11,6 @@ class Status(enum.Enum):
     DONE = 3
     ERROR = 4
 
-
-class Task(enum.Enum):
-    CONSTRAINED = 1
-    LESS_CONSTRAINED = 2
-    UNCONSTRAINED = 3
-
-
 class Show(enum.Enum):
     NO = 0
     YES = 1
@@ -34,14 +27,7 @@ class FileModel(db.Model):
     submitName = db.Column(db.String(80),  nullable=False)
     modelURL = db.Column(db.String(264))
     modelDesc = db.Column(db.Text())
-    # stride = db.Column(db.Text())
-    # inputFormat = db.Column(db.Text())
-    # corpus = db.Column(db.Text())
-    # paramDesc = db.Column(db.Text())
     paramShared = db.Column(db.String(80))
-    # fineTunedParam = db.Column(db.String(80))
-    # taskSpecParam = db.Column(db.String(80))
-    # task = db.Column(db.Enum(Task),  nullable=False)
 
     # others
     state = db.Column(db.Enum(Status),  nullable=False,

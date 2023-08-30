@@ -113,11 +113,11 @@ export const Table = ({ allData, name }: { allData: Submission[], name: string }
                                         {sortable ?
                                             direction === 1
                                                 ? <svg className="w-5 h-5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                                    <path d="M12 20L12 4M12 4L18 10M12 4L6 10" stroke={color} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M12 20L12 4M12 4L18 10M12 4L6 10" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                                 </svg>
                                                 : direction === -1
                                                     ? <svg className="w-5 h-5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                                        <path d="M12 4L12 20M12 20L18 14M12 20L6 14" stroke={color} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                        <path d="M12 4L12 20M12 20L18 14M12 20L6 14" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                                     </svg>
                                                     : <></>
                                             : <></>
@@ -196,11 +196,11 @@ export const Table = ({ allData, name }: { allData: Submission[], name: string }
                                         {
                                             direction === 1
                                                 ? <svg className="w-5 h-5 m-auto inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                                    <path d="M12 20L12 4M12 4L18 10M12 4L6 10" stroke={color} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M12 20L12 4M12 4L18 10M12 4L6 10" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                                 </svg>
                                                 : direction === -1
                                                     ? <svg className="w-5 h-5 m-auto inline" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                                        <path d="M12 4L12 20M12 20L18 14M12 20L6 14" stroke={color} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                        <path d="M12 4L12 20M12 20L18 14M12 20L6 14" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                                                     </svg>
                                                     : <></>
                                         }

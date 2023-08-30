@@ -33,7 +33,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
           <meta property="og:url" content="av.superbbenchmark.org" />
           <meta property="og:title" content="AV-SUPERB: Audio-Visual Speech and audio processing Universal PERformance Benchmark" />
           <meta property="og:description" content="A comprehensive and reproducible benchmark for Self-supervised Speech Representation Learning" />
-          <meta http-equiv="Permissions-Policy" content="interest-cohort=()"></meta>
+          <meta httpEquiv="Permissions-Policy" content="interest-cohort=()"></meta>
         </Head>
 
         <div className="bg-white mt-0 font-sans text-gray-500 -z-50">

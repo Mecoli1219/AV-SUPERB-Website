@@ -73,14 +73,10 @@ def submission_records_parser(submission_records, configs, mode="individual", co
     if mode == "individual":
         if competition_type == "public":
             config_mode = "INDIVIDUAL_SUBMISSION_INFO"
-        elif competition_type == "hidden":
-            config_mode = "INDIVIDUAL_HIDDEN_SUBMISSION_INFO"
 
     elif mode == "leaderboard":
         if competition_type == "public":
             config_mode = "LEADERBOARD_INFO"
-        elif competition_type == "hidden":
-            config_mode = "LEADERBOARD_HIDDEN_INFO"
     file_info_list = configs[config_mode]["FILE"]
     score_info_list = configs[config_mode]["SCORE"]
 
