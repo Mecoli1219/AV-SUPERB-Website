@@ -35,11 +35,11 @@ export const SecureSignOut = () => {
             </div>
         }
 
-        <button
+        <a
             onClick={() => setConfirmMenu(true)}
-            className="text-base lg:text-sm hover:bg-white hover:shadow-lg px-3 py-2 lg:px-2 lg:py-3 rounded-lg border border-transparent text-gray-600 lg:text-gray-400 font-normal lg:font-light max-lg:block"
+            className="cursor-pointer text-base lg:text-sm hover:bg-white hover:shadow-lg px-3 py-2 lg:px-2 lg:py-3 rounded-lg border border-transparent text-gray-600 lg:text-gray-400 font-normal lg:font-light max-lg:block"
         >
             LOGOUT
-        </button>
+        </a>
     </>
 }
