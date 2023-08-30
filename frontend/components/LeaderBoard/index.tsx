@@ -9,17 +9,17 @@ const LeaderBoard = () => {
     const [videoOnly, setVideoOnly] = useState<Submission[]>(LEADERBOARD.VideoOnly);
     const [audioVisualFusion, setAudioVisualFusion] = useState<Submission[]>(LEADERBOARD.AudioVisualFusion);
 
-    // useEffect(() => {
-    //     getLeaderboard().then((res) => {
-    //         const data = res.data as LeaderBoardResponse;
-    //         setAudioOnlyData(data.leaderboard.audioOnly);
-    //         setVideoOnly(data.leaderboard.videoOnly);
-    //         setAudioVisualFusion(data.leaderboard.audioVisualFusion);
-    //     })
-    //         .catch((error) => {
-    //             console.error(error);
-    //         });;
-    // }, []);
+    useEffect(() => {
+        getLeaderboard().then((res) => {
+            const data = res.data as LeaderBoardResponse;
+            setAudioOnlyData(data.leaderboard.audioOnly);
+            setVideoOnly(data.leaderboard.videoOnly);
+            setAudioVisualFusion(data.leaderboard.audioVisualFusion);
+        })
+            .catch((error) => {
+                console.error(error);
+            });;
+    }, []);
 
 
     return <div className="space-y-10">

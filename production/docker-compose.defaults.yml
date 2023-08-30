@@ -35,6 +35,8 @@ services:
     build:
       context: ../
       dockerfile: production/backend/Dockerfile
+    volumes:
+      - ../../backend/uploads:/app/uploads
     expose:
       - 5000
     networks:

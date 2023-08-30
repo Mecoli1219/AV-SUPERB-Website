@@ -1,34 +1,25 @@
 from db import db
+import enum
 
-
+class Track(enum.Enum):
+    AUDIO_ONLY = 1
+    VIDEO_ONLY = 2
+    AUDIO_VISUAL_FUSION = 3
 class ScoreModel(db.Model):
     __tablename__ = "scores"
 
     id = db.Column(db.Integer, primary_key=True)
     fileId = db.Column(db.Integer, db.ForeignKey('files.id'), nullable=False)
+    track = db.Column(db.Enum(Track), nullable=False)
 
     # metrics
-    PR_per_public = db.Column(db.Float)
-    KS_acc_public = db.Column(db.Float)
-    IC_acc_public = db.Column(db.Float)
-    SID_acc_public = db.Column(db.Float)
-    ER_acc_public = db.Column(db.Float)
-    ERfold1_acc_public = db.Column(db.Float)
-    ERfold2_acc_public = db.Column(db.Float)
-    ERfold3_acc_public = db.Column(db.Float)
-    ERfold4_acc_public = db.Column(db.Float)
-    ERfold5_acc_public = db.Column(db.Float)
-    ASR_wer_public = db.Column(db.Float)
-    ASR_LM_wer_public = db.Column(db.Float)
-    QbE_mtwv_public = db.Column(db.Float)
-    SF_f1_public = db.Column(db.Float)
-    SF_cer_public = db.Column(db.Float)
-    SV_eer_public = db.Column(db.Float)
-    SD_der_public = db.Column(db.Float)
-    ST_bleu_public = db.Column(db.Float)
-    SS_sisdri_public = db.Column(db.Float)
-    SE_pesq_public = db.Column(db.Float)
-    SE_stoi_public = db.Column(db.Float)
+    AS_20K_map_public = db.Column(db.Float)
+    VGGSound_acc_public = db.Column(db.Float)
+    Kinetics_Sounds_acc_public = db.Column(db.Float)
+    UCF101_acc_public = db.Column(db.Float)
+    LRS3_TED_cer_public = db.Column(db.Float)
+    VoxCeleb2_eer_public = db.Column(db.Float)
+    IEOCAP_acc_public = db.Column(db.Float)
 
     @classmethod
     def find_by_fileId(cls, _id: int) -> "ScoreModel":

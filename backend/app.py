@@ -7,7 +7,7 @@ from marshmallow import ValidationError
 
 from db import db
 from resources.user import UserInfo, UserLogin
-from resources.submission import AdminForHidden, LeaderBoard, Submission, SubmissionList, HiddenSubmission, HiddenSubmissionList, HiddenLeaderBoard
+from resources.submission import LeaderBoard, Submission, SubmissionList
 from resources.download import Example, Expdirs
 
 app = Flask(__name__)
@@ -22,6 +22,7 @@ api = Api(app)
 
 db.init_app(app)
 with app.app_context():
+    db.drop_all()
     db.create_all()
 
 
@@ -36,15 +37,6 @@ api.add_resource(Submission, "/api/submission/<string:submitID>",
 api.add_resource(SubmissionList, "/api/submissions")
 api.add_resource(LeaderBoard, "/api/submission/leaderboard")
 
-# hidden
-api.add_resource(HiddenSubmission, "/api/hiddensubmission", methods=["POST"])
-api.add_resource(HiddenSubmission, "/api/hiddensubmission/<string:submitID>",
-                 methods=["PATCH"])
-api.add_resource(HiddenSubmissionList, "/api/hiddensubmissions")
-api.add_resource(HiddenLeaderBoard, "/api/hiddensubmission/leaderboard")
-api.add_resource(AdminForHidden, "/api/hiddensearch/", methods=["GET"])
-api.add_resource(AdminForHidden, "/api/hiddenmodify/<string:submitID>&<string:task>&<string:score>",
-                 methods=["PATCH"])
 
 # utilities
 api.add_resource(UserInfo, "/api/user/info")

@@ -34,14 +34,14 @@ class FileModel(db.Model):
     submitName = db.Column(db.String(80),  nullable=False)
     modelURL = db.Column(db.String(264))
     modelDesc = db.Column(db.Text())
-    stride = db.Column(db.Text())
-    inputFormat = db.Column(db.Text())
-    corpus = db.Column(db.Text())
-    paramDesc = db.Column(db.Text())
+    # stride = db.Column(db.Text())
+    # inputFormat = db.Column(db.Text())
+    # corpus = db.Column(db.Text())
+    # paramDesc = db.Column(db.Text())
     paramShared = db.Column(db.String(80))
-    fineTunedParam = db.Column(db.String(80))
-    taskSpecParam = db.Column(db.String(80))
-    task = db.Column(db.Enum(Task),  nullable=False)
+    # fineTunedParam = db.Column(db.String(80))
+    # taskSpecParam = db.Column(db.String(80))
+    # task = db.Column(db.Enum(Task),  nullable=False)
 
     # others
     state = db.Column(db.Enum(Status),  nullable=False,
@@ -51,15 +51,11 @@ class FileModel(db.Model):
     aoeTimeUpload = db.Column(db.DateTime, nullable=False)
     dateUpload = db.Column(db.DateTime,  default=db.func.current_timestamp())
     showOnLeaderboard = db.Column(db.Enum(Show),  nullable=False, default=Show.NO)
-    
-    # profiling
-    macs = db.Column(BIGINT(unsigned=True))
-    macsShort = db.Column(BIGINT(unsigned=True))
-    macsMedium = db.Column(BIGINT(unsigned=True))
-    macsLong = db.Column(BIGINT(unsigned=True))
-    macsLonger = db.Column(BIGINT(unsigned=True))
 
     scores = db.relationship("ScoreModel",  backref="files")
+    # audioOnlyScores = db.relationship("ScoreModel",  backref="files")
+    # videoOnlyScores = db.relationship("ScoreModel",  backref="files")
+    # audioVisualFusionScores = db.relationship("ScoreModel",  backref="files")
 
     @classmethod
     def find_by_email(cls, email: str) -> "FileModel":

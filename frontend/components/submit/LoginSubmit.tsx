@@ -103,7 +103,7 @@ const LoginSubmit = ({ token }: { token: string }) => {
         formData.append("modelURL", data.modelURL);
         formData.append("modelDesc", data.modelDesc);
         formData.append("file", data?.file[0]);
-        await postSubmit(data, token).then((res) => {
+        await postSubmit(formData, token).then((res) => {
             setIsLoading(false);
             setSuccess(true);
             setMessage("Submission Success!");

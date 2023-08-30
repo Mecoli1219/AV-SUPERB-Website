@@ -6,7 +6,6 @@ from http import HTTPStatus
 
 from models.user import UserModel
 from models.file import FileModel
-from models.hiddenfile import HiddenFileModel
 from utils import get_AOE_today, get_AOE_week, check_admin_credential
 import google_token
 from config import configs
@@ -27,16 +26,17 @@ class UserInfo(Resource):
                 email=user_mail, AOEtime=get_AOE_today(to_str=False))
             weekly_counts = FileModel.get_interval_upload_count_by_mail(
                 email=user_mail, AOEtime=get_AOE_week(to_str=False))
-            hidden_daily_counts = HiddenFileModel.get_interval_upload_count_by_mail(
-                email=user_mail, AOEtime=get_AOE_today(to_str=False))
-            hidden_weekly_counts = HiddenFileModel.get_interval_upload_count_by_mail(
-                email=user_mail, AOEtime=get_AOE_week(to_str=False))
+            # hidden_daily_counts = HiddenFileModel.get_interval_upload_count_by_mail(
+            #     email=user_mail, AOEtime=get_AOE_today(to_str=False))
+            # hidden_weekly_counts = HiddenFileModel.get_interval_upload_count_by_mail(
+            #     email=user_mail, AOEtime=get_AOE_week(to_str=False))
             daily_left = configs["DAILY_SUBMIT_LIMIT"] - daily_counts
             weekly_left = configs["WEEKLY_SUBMIT_LIMIT"] - weekly_counts
-            hidden_daily_left = configs["HIDDEN_DAILY_SUBMIT_LIMIT"] - daily_counts
-            hidden_weekly_left = configs["HIDDEN_WEEKLY_SUBMIT_LIMIT"] - weekly_counts
+            # hidden_daily_left = configs["HIDDEN_DAILY_SUBMIT_LIMIT"] - daily_counts
+            # hidden_weekly_left = configs["HIDDEN_WEEKLY_SUBMIT_LIMIT"] - weekly_counts
             return {"username": user.name, "daily_counts": daily_counts, "weekly_counts": weekly_counts, "daily_left": daily_left, "weekly_left": weekly_left,
-                                           "hidden_daily_counts":hidden_daily_counts, "hidden_weekly_counts":hidden_weekly_counts, "hidden_daily_left":hidden_daily_left, "hidden_weekly_left": hidden_weekly_left}, HTTPStatus.OK
+                                        #    "hidden_daily_counts":hidden_daily_counts, "hidden_weekly_counts":hidden_weekly_counts, "hidden_daily_left":hidden_daily_left, "hidden_weekly_left": hidden_weekly_left
+                                           }, HTTPStatus.OK
 
         except Exception as e:
             print(e)

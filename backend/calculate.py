@@ -9,7 +9,7 @@ import tempfile
 from inference.metric import wer, slot_type_f1, slot_value_cer, EER
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from models.naive_models import UserModel, FileModel, ScoreModel
+from models.naive_models import UserModel, FileModel
 from models.file import Status
 from dotenv import load_dotenv
 from utils import is_plaintext, is_csv
