@@ -1,15 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { Submission } from "../../hooks";
-import { DATA_VALUES, KEY_NAME, SHOWN_VALUES } from "../../constants/leaderboard";
+import React, { useState, useEffect, use } from "react";
+import { MergeSubmission, Submission, TrackCollection } from "../../hooks";
+import { MERGE_KEY_NAME, MERGE_SHOWN_VALUES, DATA_VALUES, MERGE_DATA_VALUES } from "../../constants/leaderboard";
 
-export const Table = ({ allData, name }: { allData: Submission[], name: string }) => {
-    const [sortKey, setSortKey] = useState<[keyof Submission, boolean] | null>(null);
-    const [shownData, setShownData] = useState<Submission[]>([]);
-    const displayRules = (data: Submission) => {
+
+
+export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection }: {
+    audioOnly: Submission[],
+    videoOnly: Submission[],
+    audioVisualFusion: Submission[],
+    collection: TrackCollection[]
+}) => {
+    const [sortKey, setSortKey] = useState<[keyof MergeSubmission, boolean] | null>(null);
+    const [shownData, setShownData] = useState<MergeSubmission[]>([]);
+    const displayRules = (data: MergeSubmission) => {
         return true
     }
+    const [allData, setAllData] = useState<MergeSubmission[]>([]);
 
-    const sortData = (data: Submission[]) => {
+    const sortData = (data: MergeSubmission[]) => {
         if (sortKey) {
             return data.sort((data_a, data_b) => {
                 const a = data_a[sortKey[0]];
@@ -48,7 +56,7 @@ export const Table = ({ allData, name }: { allData: Submission[], name: string }
         return allData;
     };
 
-    const changeSortKey = (key: keyof Submission, direction: number) => {
+    const changeSortKey = (key: keyof MergeSubmission, direction: number) => {
         const initialDirection = direction === -1;
         if (sortKey) {
             if (sortKey[0] === key) {
@@ -65,13 +73,102 @@ export const Table = ({ allData, name }: { allData: Submission[], name: string }
         }
     };
 
+    useEffect(() => {
+        // get all submitName
+        const submitNames = new Set<string>();
 
+        audioOnly.forEach((submission) => {
+            submitNames.add([submission.submitName, submission.paramShared].toString());
+        });
+
+        videoOnly.forEach((submission) => {
+            submitNames.add([submission.submitName, submission.paramShared].toString());
+        });
+
+        audioVisualFusion.forEach((submission) => {
+            submitNames.add([submission.submitName, submission.paramShared].toString());
+        });
+
+        const data = Array.from(submitNames).map((str) => {
+            const [submitName, paramShared] = str.split(',').map((s) => {
+                return s.trim(); // Remove leading/trailing spaces
+            });
+            const data: MergeSubmission = {
+                paramShared: Number(paramShared),
+                submitName: submitName,
+                [TrackCollection.AudioOnly]: {
+                    AS_20K: "-",
+                    VGGSound: "-",
+                    Kinetics_Sounds: "-",
+                    UCF101: "-",
+                    LRS3_TED: "-",
+                    VoxCeleb2: "-",
+                    IEMOCAP: "-",
+                },
+                [TrackCollection.VideoOnly]: {
+                    AS_20K: "-",
+                    VGGSound: "-",
+                    Kinetics_Sounds: "-",
+                    UCF101: "-",
+                    LRS3_TED: "-",
+                    VoxCeleb2: "-",
+                    IEMOCAP: "-",
+                },
+                [TrackCollection.AudioVisualFusion]: {
+                    AS_20K: "-",
+                    VGGSound: "-",
+                    Kinetics_Sounds: "-",
+                    UCF101: "-",
+                    LRS3_TED: "-",
+                    VoxCeleb2: "-",
+                    IEMOCAP: "-",
+                }
+            }
+            // fill data
+            audioOnly.forEach((submission) => {
+                if (submission.submitName === submitName) {
+                    data[TrackCollection.AudioOnly].AS_20K = submission.AS_20K;
+                    data[TrackCollection.AudioOnly].VGGSound = submission.VGGSound;
+                    data[TrackCollection.AudioOnly].Kinetics_Sounds = submission.Kinetics_Sounds;
+                    data[TrackCollection.AudioOnly].UCF101 = submission.UCF101;
+                    data[TrackCollection.AudioOnly].LRS3_TED = submission.LRS3_TED;
+                    data[TrackCollection.AudioOnly].VoxCeleb2 = submission.VoxCeleb2;
+                    data[TrackCollection.AudioOnly].IEMOCAP = submission.IEMOCAP;
+                }
+            })
+            videoOnly.forEach((submission) => {
+                if (submission.submitName === submitName) {
+                    data[TrackCollection.VideoOnly].AS_20K = submission.AS_20K;
+                    data[TrackCollection.VideoOnly].VGGSound = submission.VGGSound;
+                    data[TrackCollection.VideoOnly].Kinetics_Sounds = submission.Kinetics_Sounds;
+                    data[TrackCollection.VideoOnly].UCF101 = submission.UCF101;
+                    data[TrackCollection.VideoOnly].LRS3_TED = submission.LRS3_TED;
+                    data[TrackCollection.VideoOnly].VoxCeleb2 = submission.VoxCeleb2;
+                    data[TrackCollection.VideoOnly].IEMOCAP = submission.IEMOCAP;
+                }
+            })
+            audioVisualFusion.forEach((submission) => {
+                if (submission.submitName === submitName) {
+                    data[TrackCollection.AudioVisualFusion].AS_20K = submission.AS_20K;
+                    data[TrackCollection.AudioVisualFusion].VGGSound = submission.VGGSound;
+                    data[TrackCollection.AudioVisualFusion].Kinetics_Sounds = submission.Kinetics_Sounds;
+                    data[TrackCollection.AudioVisualFusion].UCF101 = submission.UCF101;
+                    data[TrackCollection.AudioVisualFusion].LRS3_TED = submission.LRS3_TED;
+                    data[TrackCollection.AudioVisualFusion].VoxCeleb2 = submission.VoxCeleb2;
+                    data[TrackCollection.AudioVisualFusion].IEMOCAP = submission.IEMOCAP;
+                }
+            })
+            return data;
+        })
+
+        setAllData(data);
+    }, [audioOnly, videoOnly, audioVisualFusion]);
     useEffect(() => {
         setShownData(sortData(allData.filter(displayRules)));
     }, [sortKey, allData]);
 
     return <>
-        <div className="m-auto text-3xl font-bold max-h-10screen pb-2 md:pb-4 md:text-3xl pt-2">{name}</div>
+        <div className="m-auto text-3xl font-bold max-h-10screen pb-2 md:pb-4 md:text-3xl pt-2">{collection.join(' / ')}</div>
         <div className="h-90screen">
             <div className="relative overflow-x-auto mt-0 shadow-md sm:rounded-lg max-h-90screen text-base mb-2">
                 <table className="sm:rounded-lg w-full text-sm text-center align-middle text-gray-500 whitespace-nowrap border-separate border-spacing-0 bg-transparent">
@@ -88,7 +185,7 @@ export const Table = ({ allData, name }: { allData: Submission[], name: string }
                                 </th>
                             }
                             {
-                                SHOWN_VALUES.map(([key, value, sortable, direction]) => {
+                                MERGE_SHOWN_VALUES.map(([key, value, sortable, direction]) => {
                                     const color = sortKey && sortKey[0] === key ? sortKey[1] === (direction === -1) ? "green" : "red" : "black";
                                     const textColor = color === "black" ? "text-black" : `text-${color}-600`
                                     return <th scope="row" key={key} rowSpan={3}
@@ -168,12 +265,11 @@ export const Table = ({ allData, name }: { allData: Submission[], name: string }
                         </tr>
                         <tr className="min-h-12">
                             {
-                                DATA_VALUES.map(([key, value, evalKey, direction]) => {
-                                    const color = sortKey && sortKey[0] === key ? sortKey[1] === (direction === -1) ? "green" : "red" : "black";
+                                MERGE_DATA_VALUES.map(([key, value, evalKey, direction, sortable]) => {
+                                    const color = sortKey && false ? "red" : "black";
                                     const textColor = color === "black" ? "text-black" : `text-${color}-600`
                                     return <th scope="row" key={key}
-                                        className="px-6 py-3 sticky top-24 bg-gray-100 border-b hover:bg-gray-200 cursor-pointer border-l"
-                                        onClick={() => changeSortKey(key, direction)}
+                                        className={`px-6 py-3 sticky top-24 bg-gray-100 border-b border-l ${sortable ? "hover:bg-gray-200 cursor-pointer" : ""}`}
                                     >
                                         <div className={`flex items-center justify-center ${textColor}`} >
                                             {value}
@@ -202,13 +298,13 @@ export const Table = ({ allData, name }: { allData: Submission[], name: string }
                     <tbody className="overflow-y-auto max-h-80screen bg-transparent">
                         {
                             shownData.map((submission) => {
-                                return <tr key={submission[KEY_NAME]} className="bg-transparent border-b">
+                                return <tr key={submission[MERGE_KEY_NAME] as string} className="bg-transparent border-b">
                                     <th scope="col" className="px-6 py-4 text-gray-900 whitespace-nowrap bg-gray-50 border-b border-r sticky left-0">
-                                        {submission[KEY_NAME]}
+                                        {submission[MERGE_KEY_NAME] as string}
                                     </th>
                                     {
-                                        SHOWN_VALUES.map(([key, value, evalKey, upward]) => {
-                                            const data = submission[key];
+                                        MERGE_SHOWN_VALUES.map(([key, value, evalKey, upward]) => {
+                                            const data = submission[key] as string | number;
                                             return <td key={key} className="px-6 py-4 border-b">
                                                 {typeof data === "number" ? (data > 10000 || data < 0.0001) ? data.toExponential(2) : data.toFixed(2) : data}
                                             </td>
@@ -216,10 +312,13 @@ export const Table = ({ allData, name }: { allData: Submission[], name: string }
                                         )
                                     }
                                     {
-                                        DATA_VALUES.map(([key, value, evalKey, upward]) => {
-                                            const data = submission[key];
+                                        MERGE_DATA_VALUES.map(([key, value, evalKey, upward]) => {
+                                            const finalResult = collection.map((track) => {
+                                                const data = submission[track][key];
+                                                return typeof data === "number" ? (data > 10000 || data < 0.0001) ? data.toExponential(2) : data.toFixed(2) : data
+                                            })
                                             return <td key={key} className="px-6 py-4 border-b">
-                                                {typeof data === "number" ? (data > 10000 || data < 0.0001) ? data.toExponential(2) : data.toFixed(2) : data}
+                                                {finalResult.join(" / ")}
                                             </td>
                                         }
                                         )

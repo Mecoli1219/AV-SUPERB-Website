@@ -12,13 +12,17 @@ export default function Navbar() {
   const [visible, setVisible] = useState(true);
   const [openMenu, setOpenMenu] = useState(false);
 
-  const items: [string, string][] = [
+  let items: [string, string][] = [
     ["PAPER", "https://arxiv.org/abs/2105.01051"],
     ["CODE", "https://github.com/s3prl/s3prl"],
     ["TASKS", "/tasks"],
     ["LEADERBOARD", "/leaderboard"],
     ["SUBMIT", "/submit"],
   ];
+
+  if (session) {
+    items.push(["PROFILE", "/profile"]);
+  }
 
   const barHeight: number = 48;
 
@@ -46,12 +50,12 @@ export default function Navbar() {
       }
       <div className="relative top-0">
         <div className={`transition-top duration-500 shadow-nav ${visible
-          ? "bg-white max-w-full mx-auto px-10 md:px-20 py-2 h-16 fixed top-0 left-0 right-0"
-          : "bg-white max-w-full mx-auto px-10 md:px-20 py-2 h-16 fixed -top-32 left-0 right-0"} z-nav`}>
-          <div className="flex md:flex-row justify-between items-center space-x-10">
+          ? "bg-white max-w-full mx-auto px-0 sm:px-10 md:px-20 py-2 h-16 fixed top-0 left-0 right-0"
+          : "bg-white max-w-full mx-auto px-0 sm:px-10 md:px-20 py-2 h-16 fixed -top-32 left-0 right-0"} z-nav`}>
+          <div className="flex md:flex-row justify-between items-center sm:space-x-10">
             <div className="flex flex-col ">
               <Link href="/" className="hover:bg-white hover:shadow-lg rounded-lg border border-transparent w-fit">
-                <img src="/logo-color.png" className="pl-2 pr-10 py-1 h-12 object-contain" />
+                <img src="/logo-color.png" className="px-2 sm:pr-10 py-1 h-12 object-contain" />
               </Link>
             </div>
 

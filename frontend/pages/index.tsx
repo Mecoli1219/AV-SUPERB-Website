@@ -139,7 +139,7 @@ function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 md:grid-cols-3 xl:grid-cols-3 mt-16 space-y-5">
             {CONTRIBUTORS.map((item) => {
-              return <div key={item[0]} className="flex justify-center items-center m-auto">
+              return <div key={item[0]} className="flex justify-center items-center m-auto px-5">
                 <a href={item[1]} target="_blank" rel="noopener noreferrer">
                   <img src={item[0]} className="h-20 object-contain" />
                 </a>

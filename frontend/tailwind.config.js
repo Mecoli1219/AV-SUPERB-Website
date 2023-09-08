@@ -17,6 +17,10 @@ module.exports = {
       height: {
         '128': '32rem',
         '80screen': '80vh',
+        "0.5font": "0.5em",
+        "0.8font": "0.8em",
+        "90screen": "90vh",
+        'font': '1em'
       },
       boxShadow: {
         'nav': '0px 0px 10px 0px rgba(0, 0, 0, 0.5)',
@@ -27,7 +31,8 @@ module.exports = {
       maxHeight: {
         "80screen": '80vh',
         "screen": '100vh',
-        "90screen": "90vh"
+        "90screen": "90vh",
+        "10screen": "10vh",
       },
       margin: {
         "10vh": "10vh",
@@ -36,6 +41,10 @@ module.exports = {
         "80screen": "80vw",
         "70screen": "70vw",
         "60screen": "60vw",
+        "font": "1em",
+        "0.5font": "0.5em",
+        "0.8font": "0.8em",
+        "95": "95%",
       },
       zIndex: {
         "60": "60",
@@ -52,6 +61,16 @@ module.exports = {
         '1/4': '25%',
         '1/2': '50%',
         '3/4': '75%',
+        '95': '95%',
+        '95screen': '95vw',
+      },
+      maxWidth: {
+        '1/4': '25%',
+        '1/2': '50%',
+        '3/4': '75%',
+        '95': '95%',
+        '95screen': '95vw',
+        '80screen': '80vw',
       }
     },
     minHeight: {
