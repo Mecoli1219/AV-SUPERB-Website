@@ -1,9 +1,9 @@
 import { useState, useEffect, use } from "react";
-import { getLeaderboard, LeaderBoardResponse, Submission, Task } from "../../hooks";
+import { getLeaderboard, LeaderBoardResponse, Submission } from "../../hooks";
 import { Table } from "./Table";
 import { LEADERBOARD } from "../../constants/leaderboard";
 import { Select } from "./Select";
-import { Track, TrackCollection } from "../../hooks/leaderboard";
+import { Track, TrackCollection } from "../../hooks";
 import { MergeTable } from "./MergeTable";
 
 

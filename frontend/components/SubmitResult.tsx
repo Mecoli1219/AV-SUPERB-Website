@@ -1,18 +1,21 @@
-import { useState, Dispatch, SetStateAction } from "react";
-import { signOut } from "next-auth/react"
+import { Dispatch, SetStateAction } from "react";
 import { useRouter } from 'next/router';
 
-export const SubmitResult = ({ setShowResult, success, message }: {
+export const SubmitResult = ({ setShowResult, success, message, success_redirect }: {
     setShowResult: Dispatch<SetStateAction<boolean>>,
     success: boolean,
-    message: string
+    message: string,
+    success_redirect: string
 }) => {
     const router = useRouter();
     const closeResult = (success: boolean) => {
         if (success) {
-            router.push({
-                pathname: '/',
-            });
+            if (success_redirect !== "") {
+                router.push({
+                    pathname: success_redirect,
+                });
+            }
+            setShowResult(false);
         } else {
             setShowResult(false);
         }

@@ -201,8 +201,8 @@ export const Table = ({ allData, name }: { allData: Submission[], name: string }
                     </thead>
                     <tbody className="overflow-y-auto max-h-80screen bg-transparent">
                         {
-                            shownData.map((submission) => {
-                                return <tr key={submission[KEY_NAME]} className="bg-transparent border-b">
+                            shownData.map((submission, index) => {
+                                return <tr key={index} className="bg-transparent border-b">
                                     <th scope="col" className="px-6 py-4 text-gray-900 whitespace-nowrap bg-gray-50 border-b border-r sticky left-0">
                                         {submission[KEY_NAME]}
                                     </th>

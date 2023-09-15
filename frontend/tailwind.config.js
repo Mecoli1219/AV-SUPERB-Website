@@ -71,6 +71,7 @@ module.exports = {
         '95': '95%',
         '95screen': '95vw',
         '80screen': '80vw',
+        '36': '144px',
       }
     },
     minHeight: {

@@ -1,23 +1,28 @@
-import React, { useState, useEffect, use } from "react";
-import { MergeSubmission, Submission, TrackCollection } from "../../hooks";
-import { MERGE_KEY_NAME, MERGE_SHOWN_VALUES, DATA_VALUES, MERGE_DATA_VALUES } from "../../constants/leaderboard";
+import React, { useState, useEffect } from "react";
+import { MergeInfoSubmission, SubmissionInfo, TrackCollection } from "../../hooks";
+import { MERGE_KEY_NAME, MERGE_SHOWN_VALUES, MERGE_DATA_VALUES } from "../../constants/profile";
+import HoverDescription from "./HoverDescription";
 
 
 
-export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection }: {
-    audioOnly: Submission[],
-    videoOnly: Submission[],
-    audioVisualFusion: Submission[],
-    collection: TrackCollection[]
+export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection, setShowOnLeaderboard, downloadPreviousUpload }: {
+    audioOnly: SubmissionInfo[],
+    videoOnly: SubmissionInfo[],
+    audioVisualFusion: SubmissionInfo[],
+    collection: TrackCollection[],
+    setShowOnLeaderboard: (submission_id: string) => Promise<void>,
+    downloadPreviousUpload: (submission_id: string) => Promise<void>
 }) => {
-    const [sortKey, setSortKey] = useState<[keyof MergeSubmission, boolean] | null>(null);
-    const [shownData, setShownData] = useState<MergeSubmission[]>([]);
-    const displayRules = (data: MergeSubmission) => {
+    const [sortKey, setSortKey] = useState<[keyof MergeInfoSubmission, boolean] | null>(null);
+    const [shownData, setShownData] = useState<MergeInfoSubmission[]>([]);
+    const [allData, setAllData] = useState<MergeInfoSubmission[]>([]);
+    const displayRules = (data: MergeInfoSubmission) => {
         return true
     }
-    const [allData, setAllData] = useState<MergeSubmission[]>([]);
 
-    const sortData = (data: MergeSubmission[]) => {
+    const localTimeZoneOffsetMinutes = new Date().getTimezoneOffset();
+
+    const sortData = (data: MergeInfoSubmission[]) => {
         if (sortKey) {
             return data.sort((data_a, data_b) => {
                 const a = data_a[sortKey[0]];
@@ -47,6 +52,8 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                     res = a - numB;
                 } else if (typeof a === 'number' && typeof b === 'number') {
                     res = a - b;
+                } else if (typeof a === typeof b) {
+                    res = a.toString().localeCompare(b.toString());
                 } else {
                     return 0;
                 }
@@ -56,7 +63,7 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
         return allData;
     };
 
-    const changeSortKey = (key: keyof MergeSubmission, direction: number) => {
+    const changeSortKey = (key: keyof MergeInfoSubmission, direction: number) => {
         const initialDirection = direction === -1;
         if (sortKey) {
             if (sortKey[0] === key) {
@@ -73,93 +80,196 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
         }
     };
 
+    const parseData = (submission: MergeInfoSubmission, key: keyof MergeInfoSubmission) => {
+        const data = submission[key];
+        if (key === "modelDesc") {
+            return <HoverDescription description={data as string} key={key} />
+        }
+        if (key === "showOnLeaderboard") {
+            return <td key={key} className="px-6 py-2 border-b">
+                <div className="rounded-full text-lg cursor-pointer py-2" onClick={() => setShowOnLeaderboard(submission["submitUUID"])}>
+                    {
+                        data === "NO" ? <svg width="20px" height="20px" viewBox="0 0 24 24" className="m-auto" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="4.8">
+                                <rect fill="#f9fbff" stroke-width="1" stroke="#868c8f" x="0.5" y="0.5" width="23" height="23" rx="5.5"></rect>
+                            </g>
+                            <g id="SVGRepo_iconCarrier">
+                                <rect fill="#f9fbff" stroke-width="1" stroke="#868c8f" x="0.5" y="0.5" width="23" height="23" rx="5.5"></rect> </g></svg>
+                            : <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 1024 1024" className="m-auto" fill="#43A047">
+                                <path d="M866.133333 258.133333L362.666667 761.6l-204.8-204.8L98.133333 618.666667 362.666667 881.066667l563.2-563.2z" />
+                            </svg>
+                    }
+                </div>
+            </td>
+        }
+        return <td key={key} className="px-6 py-4 border-b">
+            {typeof data === "number" ? (data > 10000 || data < 0.0001) ? data.toExponential(2) : data.toFixed(2) : data as string}
+        </td>
+    };
+
     useEffect(() => {
         // get all submitName
-        const submitNames = new Set<string>();
+        const submitDict = new Map<string, MergeInfoSubmission>();
 
         audioOnly.forEach((submission) => {
-            submitNames.add([submission.submitName, submission.paramShared].toString());
+            if (!submitDict.has(submission.aoeTimeUpload.getTime().toString())) {
+                submitDict.set(submission.aoeTimeUpload.getTime().toString(), {
+                    paramShared: submission.paramShared,
+                    submitName: submission.submitName,
+                    aoeTimeUpload: submission.aoeTimeUpload,
+                    showOnLeaderboard: submission.showOnLeaderboard,
+                    modelDesc: submission.modelDesc,
+                    state: submission.state,
+                    stateInfo: submission.stateInfo,
+                    submitUUID: submission.submitUUID,
+                    [TrackCollection.AudioOnly]: {
+                        AS_20K: submission.AS_20K,
+                        VGGSound: submission.VGGSound,
+                        Kinetics_Sounds: submission.Kinetics_Sounds,
+                        UCF101: submission.UCF101,
+                        LRS3_TED: submission.LRS3_TED,
+                        VoxCeleb2: submission.VoxCeleb2,
+                        IEMOCAP: submission.IEMOCAP,
+                    },
+                    [TrackCollection.VideoOnly]: {
+                        AS_20K: "-",
+                        VGGSound: "-",
+                        Kinetics_Sounds: "-",
+                        UCF101: "-",
+                        LRS3_TED: "-",
+                        VoxCeleb2: "-",
+                        IEMOCAP: "-",
+                    },
+                    [TrackCollection.AudioVisualFusion]: {
+                        AS_20K: "-",
+                        VGGSound: "-",
+                        Kinetics_Sounds: "-",
+                        UCF101: "-",
+                        LRS3_TED: "-",
+                        VoxCeleb2: "-",
+                        IEMOCAP: "-",
+                    }
+                });
+            } else {
+                const data: MergeInfoSubmission = submitDict.get(submission.aoeTimeUpload.getTime().toString()) as MergeInfoSubmission;
+                data[TrackCollection.AudioOnly].AS_20K = submission.AS_20K;
+                data[TrackCollection.AudioOnly].VGGSound = submission.VGGSound;
+                data[TrackCollection.AudioOnly].Kinetics_Sounds = submission.Kinetics_Sounds;
+                data[TrackCollection.AudioOnly].UCF101 = submission.UCF101;
+                data[TrackCollection.AudioOnly].LRS3_TED = submission.LRS3_TED;
+                data[TrackCollection.AudioOnly].VoxCeleb2 = submission.VoxCeleb2;
+                data[TrackCollection.AudioOnly].IEMOCAP = submission.IEMOCAP;
+            }
         });
 
         videoOnly.forEach((submission) => {
-            submitNames.add([submission.submitName, submission.paramShared].toString());
+            if (!submitDict.has(submission.aoeTimeUpload.getTime().toString())) {
+                submitDict.set(submission.aoeTimeUpload.getTime().toString(), {
+                    paramShared: submission.paramShared,
+                    submitName: submission.submitName,
+                    aoeTimeUpload: submission.aoeTimeUpload,
+                    showOnLeaderboard: submission.showOnLeaderboard,
+                    modelDesc: submission.modelDesc,
+                    state: submission.state,
+                    submitUUID: submission.submitUUID,
+                    stateInfo: submission.stateInfo,
+                    [TrackCollection.AudioOnly]: {
+                        AS_20K: "-",
+                        VGGSound: "-",
+                        Kinetics_Sounds: "-",
+                        UCF101: "-",
+                        LRS3_TED: "-",
+                        VoxCeleb2: "-",
+                        IEMOCAP: "-",
+                    },
+                    [TrackCollection.VideoOnly]: {
+                        AS_20K: submission.AS_20K,
+                        VGGSound: submission.VGGSound,
+                        Kinetics_Sounds: submission.Kinetics_Sounds,
+                        UCF101: submission.UCF101,
+                        LRS3_TED: submission.LRS3_TED,
+                        VoxCeleb2: submission.VoxCeleb2,
+                        IEMOCAP: submission.IEMOCAP,
+                    },
+                    [TrackCollection.AudioVisualFusion]: {
+                        AS_20K: "-",
+                        VGGSound: "-",
+                        Kinetics_Sounds: "-",
+                        UCF101: "-",
+                        LRS3_TED: "-",
+                        VoxCeleb2: "-",
+                        IEMOCAP: "-",
+                    }
+                });
+            } else {
+                const data: MergeInfoSubmission = submitDict.get(submission.aoeTimeUpload.getTime().toString()) as MergeInfoSubmission;
+                data[TrackCollection.VideoOnly].AS_20K = submission.AS_20K;
+                data[TrackCollection.VideoOnly].VGGSound = submission.VGGSound;
+                data[TrackCollection.VideoOnly].Kinetics_Sounds = submission.Kinetics_Sounds;
+                data[TrackCollection.VideoOnly].UCF101 = submission.UCF101;
+                data[TrackCollection.VideoOnly].LRS3_TED = submission.LRS3_TED;
+                data[TrackCollection.VideoOnly].VoxCeleb2 = submission.VoxCeleb2;
+                data[TrackCollection.VideoOnly].IEMOCAP = submission.IEMOCAP;
+            }
         });
 
         audioVisualFusion.forEach((submission) => {
-            submitNames.add([submission.submitName, submission.paramShared].toString());
+            if (!submitDict.has(submission.aoeTimeUpload.getTime().toString())) {
+                submitDict.set(submission.aoeTimeUpload.getTime().toString(), {
+                    paramShared: submission.paramShared,
+                    submitName: submission.submitName,
+                    aoeTimeUpload: submission.aoeTimeUpload,
+                    showOnLeaderboard: submission.showOnLeaderboard,
+                    modelDesc: submission.modelDesc,
+                    state: submission.state,
+                    stateInfo: submission.stateInfo,
+                    submitUUID: submission.submitUUID,
+                    [TrackCollection.AudioOnly]: {
+                        AS_20K: "-",
+                        VGGSound: "-",
+                        Kinetics_Sounds: "-",
+                        UCF101: "-",
+                        LRS3_TED: "-",
+                        VoxCeleb2: "-",
+                        IEMOCAP: "-",
+                    },
+                    [TrackCollection.VideoOnly]: {
+                        AS_20K: "-",
+                        VGGSound: "-",
+                        Kinetics_Sounds: "-",
+                        UCF101: "-",
+                        LRS3_TED: "-",
+                        VoxCeleb2: "-",
+                        IEMOCAP: "-",
+                    },
+                    [TrackCollection.AudioVisualFusion]: {
+                        AS_20K: submission.AS_20K,
+                        VGGSound: submission.VGGSound,
+                        Kinetics_Sounds: submission.Kinetics_Sounds,
+                        UCF101: submission.UCF101,
+                        LRS3_TED: submission.LRS3_TED,
+                        VoxCeleb2: submission.VoxCeleb2,
+                        IEMOCAP: submission.IEMOCAP,
+                    }
+                });
+            } else {
+                const data: MergeInfoSubmission = submitDict.get(submission.aoeTimeUpload.getTime().toString()) as MergeInfoSubmission;
+                data[TrackCollection.AudioVisualFusion].AS_20K = submission.AS_20K;
+                data[TrackCollection.AudioVisualFusion].VGGSound = submission.VGGSound;
+                data[TrackCollection.AudioVisualFusion].Kinetics_Sounds = submission.Kinetics_Sounds;
+                data[TrackCollection.AudioVisualFusion].UCF101 = submission.UCF101;
+                data[TrackCollection.AudioVisualFusion].LRS3_TED = submission.LRS3_TED;
+                data[TrackCollection.AudioVisualFusion].VoxCeleb2 = submission.VoxCeleb2;
+                data[TrackCollection.AudioVisualFusion].IEMOCAP = submission.IEMOCAP;
+            }
         });
 
-        const data = Array.from(submitNames).map((str) => {
-            const [submitName, paramShared] = str.split(',').map((s) => {
-                return s.trim(); // Remove leading/trailing spaces
-            });
-            const data: MergeSubmission = {
-                paramShared: Number(paramShared),
-                submitName: submitName,
-                [TrackCollection.AudioOnly]: {
-                    AS_20K: "-",
-                    VGGSound: "-",
-                    Kinetics_Sounds: "-",
-                    UCF101: "-",
-                    LRS3_TED: "-",
-                    VoxCeleb2: "-",
-                    IEMOCAP: "-",
-                },
-                [TrackCollection.VideoOnly]: {
-                    AS_20K: "-",
-                    VGGSound: "-",
-                    Kinetics_Sounds: "-",
-                    UCF101: "-",
-                    LRS3_TED: "-",
-                    VoxCeleb2: "-",
-                    IEMOCAP: "-",
-                },
-                [TrackCollection.AudioVisualFusion]: {
-                    AS_20K: "-",
-                    VGGSound: "-",
-                    Kinetics_Sounds: "-",
-                    UCF101: "-",
-                    LRS3_TED: "-",
-                    VoxCeleb2: "-",
-                    IEMOCAP: "-",
-                }
-            }
-            // fill data
-            audioOnly.forEach((submission) => {
-                if (submission.submitName === submitName) {
-                    data[TrackCollection.AudioOnly].AS_20K = submission.AS_20K;
-                    data[TrackCollection.AudioOnly].VGGSound = submission.VGGSound;
-                    data[TrackCollection.AudioOnly].Kinetics_Sounds = submission.Kinetics_Sounds;
-                    data[TrackCollection.AudioOnly].UCF101 = submission.UCF101;
-                    data[TrackCollection.AudioOnly].LRS3_TED = submission.LRS3_TED;
-                    data[TrackCollection.AudioOnly].VoxCeleb2 = submission.VoxCeleb2;
-                    data[TrackCollection.AudioOnly].IEMOCAP = submission.IEMOCAP;
-                }
-            })
-            videoOnly.forEach((submission) => {
-                if (submission.submitName === submitName) {
-                    data[TrackCollection.VideoOnly].AS_20K = submission.AS_20K;
-                    data[TrackCollection.VideoOnly].VGGSound = submission.VGGSound;
-                    data[TrackCollection.VideoOnly].Kinetics_Sounds = submission.Kinetics_Sounds;
-                    data[TrackCollection.VideoOnly].UCF101 = submission.UCF101;
-                    data[TrackCollection.VideoOnly].LRS3_TED = submission.LRS3_TED;
-                    data[TrackCollection.VideoOnly].VoxCeleb2 = submission.VoxCeleb2;
-                    data[TrackCollection.VideoOnly].IEMOCAP = submission.IEMOCAP;
-                }
-            })
-            audioVisualFusion.forEach((submission) => {
-                if (submission.submitName === submitName) {
-                    data[TrackCollection.AudioVisualFusion].AS_20K = submission.AS_20K;
-                    data[TrackCollection.AudioVisualFusion].VGGSound = submission.VGGSound;
-                    data[TrackCollection.AudioVisualFusion].Kinetics_Sounds = submission.Kinetics_Sounds;
-                    data[TrackCollection.AudioVisualFusion].UCF101 = submission.UCF101;
-                    data[TrackCollection.AudioVisualFusion].LRS3_TED = submission.LRS3_TED;
-                    data[TrackCollection.AudioVisualFusion].VoxCeleb2 = submission.VoxCeleb2;
-                    data[TrackCollection.AudioVisualFusion].IEMOCAP = submission.IEMOCAP;
-                }
-            })
-            return data;
-        })
+        console.log(submitDict)
+        const data: MergeInfoSubmission[] = [];
+        submitDict.forEach((value, key) => {
+            data.push(value);
+        });
 
         setAllData(data);
     }, [audioOnly, videoOnly, audioVisualFusion]);
@@ -179,9 +289,9 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                                 <th scope="row"
                                     rowSpan={3}
                                     className={`px-6 py-auto sticky top-0 bg-gray-100 left-0 border-r border-b hover:bg-gray-200 cursor-pointer z-20
-                            ${sortKey && sortKey[0] === "submitName" ? sortKey[1] === true ? "text-green-600" : "text-red-600" : "text-black"}`}
-                                    onClick={() => changeSortKey("submitName", -1)}>
-                                    Methods
+                                        ${sortKey && sortKey[0] === "aoeTimeUpload" ? sortKey[1] === true ? "text-green-600" : "text-red-600" : "text-black"}`}
+                                    onClick={() => changeSortKey("aoeTimeUpload", -1)}>
+                                    Upload Time
                                 </th>
                             }
                             {
@@ -211,6 +321,13 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                                 }
                                 )
                             }
+                            <th scope="row" rowSpan={3}
+                                className="sticky top-0 px-6 py-3 bg-gray-100 border-b"
+                            >
+                                <div className="flex items-center justify-center text-black" >
+                                    Download
+                                </div>
+                            </th>
                             <th scope="row" colSpan={4}
                                 className="sticky top-0 px-6 py-3 bg-gray-100 border-b border-l"
                             >
@@ -300,17 +417,14 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                             shownData.map((submission) => {
                                 return <tr key={submission[MERGE_KEY_NAME] as string} className="bg-transparent border-b">
                                     <th scope="col" className="px-6 py-4 text-gray-900 whitespace-nowrap bg-gray-50 border-b border-r sticky left-0">
-                                        {submission[MERGE_KEY_NAME] as string}
+                                        {new Date((submission[MERGE_KEY_NAME] as Date).getTime() + (720 - localTimeZoneOffsetMinutes) * 60 * 1000).toLocaleString()}
                                     </th>
                                     {
-                                        MERGE_SHOWN_VALUES.map(([key, value, evalKey, upward]) => {
-                                            const data = submission[key] as string | number;
-                                            return <td key={key} className="px-6 py-4 border-b">
-                                                {typeof data === "number" ? (data > 10000 || data < 0.0001) ? data.toExponential(2) : data.toFixed(2) : data}
-                                            </td>
-                                        }
-                                        )
+                                        MERGE_SHOWN_VALUES.map(([key, value, evalKey, upward]) => parseData(submission, key))
                                     }
+                                    <td className="px-6 py-4 border-b cursor-pointer" onClick={() => downloadPreviousUpload(submission["submitUUID"])}>
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" className="m-auto" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14 7H16C18.7614 7 21 9.23858 21 12C21 14.7614 18.7614 17 16 17H14M10 7H8C5.23858 7 3 9.23858 3 12C3 14.7614 5.23858 17 8 17H10M8 12H16" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                    </td>
                                     {
                                         MERGE_DATA_VALUES.map(([key, value, evalKey, upward]) => {
                                             const finalResult = collection.map((track) => {
@@ -318,7 +432,6 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                                                 return typeof data === "number" ? (data > 10000 || data < 0.0001) ? data.toExponential(2) : data.toFixed(2) : data
                                             })
                                             return <td key={key} className="px-6 py-4 border-b">
-                                                {/* {finalResult.join(" / ")} */}
                                                 <div className="grid grid-flow-col auto-rows-max">
 
                                                     {
@@ -328,7 +441,7 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                                                                     {data}
                                                                 </div>
                                                                 {
-                                                                    index < finalResult.length - 1 ? <div className="text-center px-1" key={index + "-dash"}>
+                                                                    index < finalResult.length - 1 ? <div className="text-center px-1">
                                                                         /
                                                                     </div> : <></>
                                                                 }

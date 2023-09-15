@@ -19,7 +19,7 @@ class ScoreModel(db.Model):
     UCF101_acc_public = db.Column(db.Float)
     LRS3_TED_cer_public = db.Column(db.Float)
     VoxCeleb2_eer_public = db.Column(db.Float)
-    IEOCAP_acc_public = db.Column(db.Float)
+    IEMOCAP_acc_public = db.Column(db.Float)
 
     @classmethod
     def find_by_fileId(cls, _id: int) -> "ScoreModel":

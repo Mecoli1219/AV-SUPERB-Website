@@ -75,7 +75,8 @@ class UserLogin(Resource):
                 load_dotenv()
                 identity = google_token.validate_id_token(
                     token, os.getenv('GOOGLE_CLIENT_ID'))
-            except ValueError:
+            except ValueError as e:
+                print(e)
                 return {"message": 'Invalid Google ID token'}, HTTPStatus.FORBIDDEN
 
             # Get the user info out of the validated identity

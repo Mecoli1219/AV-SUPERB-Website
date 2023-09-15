@@ -80,16 +80,34 @@ def submission_records_parser(submission_records, configs, mode="individual", co
     file_info_list = configs[config_mode]["FILE"]
     score_info_list = configs[config_mode]["SCORE"]
 
-    submission_info = []
+    submission_info = {
+        "audioOnly": [],
+        "videoOnly": [],
+        "audioVisualFusion": []
+    }
+    key_change = {
+        "AUDIO_ONLY": "audioOnly",
+        "VIDEO_ONLY": "videoOnly",
+        "AUDIO_VISUAL_FUSION": "audioVisualFusion",
+        "AS_20K_map_public": "AS_20K",
+        "VGGSound_acc_public": "VGGSound",
+        "Kinetics_Sounds_acc_public": "Kinetics_Sounds",
+        "UCF101_acc_public": "UCF101",
+        "LRS3_TED_cer_public": "LRS3_TED",
+        "VoxCeleb2_eer_public": "VoxCeleb2",
+        "IEMOCAP_acc_public": "IEMOCAP"
+    }
     for file_model in submission_records:
-        single_info = {}
-        score_model = file_model.scores[0]
-        for file_info in file_info_list:
-            single_info[file_info] = __submission_records_parser(file_model.__dict__[file_info], file_info)
-        for score_info in score_info_list:
-            single_info[score_info] = __submission_records_parser(score_model.__dict__[score_info], score_info)
-        
-        submission_info.append(single_info)
+        for score_model in file_model.scores:  
+            single_info = {}
+            for file_info in file_info_list:
+                single_info[file_info] = __submission_records_parser(file_model.__dict__[file_info], file_info)
+            for score_info in score_info_list:
+                if score_info in key_change:
+                    single_info[key_change[score_info]] = __submission_records_parser(score_model.__dict__[score_info], score_info)
+                else:
+                    single_info[score_info] = __submission_records_parser(score_model.__dict__[score_info], score_info)
+            submission_info[key_change[single_info["track"]]].append(single_info)
     return submission_info
 
 def get_leaderboard_default():

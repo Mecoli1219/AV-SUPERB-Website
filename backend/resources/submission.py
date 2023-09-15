@@ -106,7 +106,6 @@ class Submission(Resource):
             submission_record = FileModel.find_by_submitID(submitUUID=submitID)
 
             assert submission_record.email == user_mail
-            task_id = submission_record.task.value  # == mapping[task]
 
             if submission_record.showOnLeaderboard == Show.YES:
                 FileModel.unset_show_attribute_by_submitID(submitUUID=submitID)
@@ -133,6 +132,7 @@ class SubmissionList(Resource):
                 submission_records, configs, mode="individual")
             return make_response(jsonify({"submission_info": submission_info}), HTTPStatus.OK)
         except Exception as e:
+            print(e)
             return {"message": "Internal Server Error!"}, HTTPStatus.INTERNAL_SERVER_ERROR
 
 
@@ -153,7 +153,9 @@ class LeaderBoard(Resource):
             for single_info, name in zip(submission_info, submission_names):
                 single_info.update({"name": name})
 
-            leaderboard_default_data["audioOnly"] += submission_info
+            leaderboard_default_data["audioOnly"] += submission_info["audioOnly"]
+            leaderboard_default_data["videoOnly"] += submission_info["videoOnly"]
+            leaderboard_default_data["audioVisualFusion"] += submission_info["audioVisualFusion"]
 
             return {"leaderboard": leaderboard_default_data}, HTTPStatus.OK
 

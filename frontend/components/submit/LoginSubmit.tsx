@@ -4,7 +4,7 @@ import { BaseSyntheticEvent, useState, useRef, useEffect } from "react";
 import { Path, useForm, UseFormRegister, SubmitHandler, FieldErrors, set } from "react-hook-form";
 import { IFormValues, postSubmit } from "../../hooks/submit";
 import { FormValue, formVal } from "../../utils/formValidator";
-import { SubmitResult } from "./SubmitResult";
+import { SubmitResult } from "../SubmitResult";
 
 const defaultValues = {
     submitName: "",
@@ -122,7 +122,7 @@ const LoginSubmit = ({ token }: { token: string }) => {
 
     return <div className="font-light">
         {
-            showResult && <SubmitResult setShowResult={setShowResult} success={success} message={message} />
+            showResult && <SubmitResult setShowResult={setShowResult} success={success} message={message} success_redirect="/profile" />
         }
         <div className="pt-10 text-gray-400">
             Make sure to read the <Link href="/rules" className="text-blue-400 underline cursor-pointer">Rules</Link> before
@@ -161,7 +161,7 @@ const LoginSubmit = ({ token }: { token: string }) => {
                     }}
                 />
                 <label
-                    className=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center block"
+                    className=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center block cursor-pointer"
                     htmlFor="file"
                 >
 

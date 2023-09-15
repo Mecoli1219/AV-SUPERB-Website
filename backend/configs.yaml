@@ -14,7 +14,6 @@ GROUND_TRUTH_ROOT: "./inference/truth/"
 INDIVIDUAL_SUBMISSION_INFO:
     FILE:
         - aoeTimeUpload
-        - task
         - showOnLeaderboard
         - submitName
         - modelURL
@@ -24,29 +23,30 @@ INDIVIDUAL_SUBMISSION_INFO:
         - stateInfo
         - submitUUID
     SCORE:
-        - AS_20K
-        - VGGSound
-        - Kinetics_Sounds
-        - UCF101
-        - LRS3_TED
-        - VoxCeleb2
-        - IEMOCAP
+        - track
+        - AS_20K_map_public
+        - VGGSound_acc_public
+        - Kinetics_Sounds_acc_public
+        - UCF101_acc_public
+        - LRS3_TED_cer_public
+        - VoxCeleb2_eer_public
+        - IEMOCAP_acc_public
 
 ## Leaderboard shown data
 LEADERBOARD_INFO:
     FILE:
         - aoeTimeUpload
-        - task
         - submitName
         - modelURL
         - modelDesc
         - paramShared
     SCORE:
-        - AS_20K
-        - VGGSound
-        - Kinetics_Sounds
-        - UCF101
-        - LRS3_TED
-        - VoxCeleb2
-        - IEMOCAP
+        - track
+        - AS_20K_map_public
+        - VGGSound_acc_public
+        - Kinetics_Sounds_acc_public
+        - UCF101_acc_public
+        - LRS3_TED_cer_public
+        - VoxCeleb2_eer_public
+        - IEMOCAP_acc_public
 

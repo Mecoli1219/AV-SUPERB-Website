@@ -14,7 +14,7 @@ def validate_id_token(idt: str, client_id: str) -> dict:
     Raises ValueError if the validation failures, otherwise returns the decoded
     token.
     """
-    id_info = id_token.verify_oauth2_token(idt,  requests.Request(), client_id)
+    id_info = id_token.verify_oauth2_token(idt,  requests.Request(), client_id, clock_skew_in_seconds=60)
     if id_info['iss'] not in VALID_ISSUERS:
         raise ValueError('Wrong issuer.')
     return id_info
