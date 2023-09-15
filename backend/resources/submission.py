@@ -150,9 +150,6 @@ class LeaderBoard(Resource):
             submission_info = submission_records_parser(
                 leaderboard_user_data, configs, mode="leaderboard")
 
-            for single_info, name in zip(submission_info, submission_names):
-                single_info.update({"name": name})
-
             leaderboard_default_data["audioOnly"] += submission_info["audioOnly"]
             leaderboard_default_data["videoOnly"] += submission_info["videoOnly"]
             leaderboard_default_data["audioVisualFusion"] += submission_info["audioVisualFusion"]

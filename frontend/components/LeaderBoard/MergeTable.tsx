@@ -75,91 +75,116 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
 
     useEffect(() => {
         // get all submitName
-        const submitNames = new Set<string>();
-
+        const submitDict = new Map<string, MergeSubmission>();
         audioOnly.forEach((submission) => {
-            submitNames.add([submission.submitName, submission.paramShared].toString());
-        });
-
-        videoOnly.forEach((submission) => {
-            submitNames.add([submission.submitName, submission.paramShared].toString());
-        });
-
-        audioVisualFusion.forEach((submission) => {
-            submitNames.add([submission.submitName, submission.paramShared].toString());
-        });
-
-        const data = Array.from(submitNames).map((str) => {
-            const [submitName, paramShared] = str.split(',').map((s) => {
-                return s.trim(); // Remove leading/trailing spaces
-            });
-            const data: MergeSubmission = {
-                paramShared: Number(paramShared),
-                submitName: submitName,
-                [TrackCollection.AudioOnly]: {
-                    AS_20K: "-",
-                    VGGSound: "-",
-                    Kinetics_Sounds: "-",
-                    UCF101: "-",
-                    LRS3_TED: "-",
-                    VoxCeleb2: "-",
-                    IEMOCAP: "-",
-                },
-                [TrackCollection.VideoOnly]: {
-                    AS_20K: "-",
-                    VGGSound: "-",
-                    Kinetics_Sounds: "-",
-                    UCF101: "-",
-                    LRS3_TED: "-",
-                    VoxCeleb2: "-",
-                    IEMOCAP: "-",
-                },
-                [TrackCollection.AudioVisualFusion]: {
-                    AS_20K: "-",
-                    VGGSound: "-",
-                    Kinetics_Sounds: "-",
-                    UCF101: "-",
-                    LRS3_TED: "-",
-                    VoxCeleb2: "-",
-                    IEMOCAP: "-",
-                }
+            if (!submitDict.has(submission.submitUUID)) {
+                submitDict.set(submission.submitUUID, {
+                    paramShared: submission.paramShared,
+                    submitName: submission.submitName,
+                    submitUUID: submission.submitUUID,
+                    [TrackCollection.AudioOnly]: {
+                        AS_20K: submission.AS_20K,
+                        VGGSound: submission.VGGSound,
+                        Kinetics_Sounds: submission.Kinetics_Sounds,
+                        UCF101: submission.UCF101,
+                        LRS3_TED: submission.LRS3_TED,
+                        VoxCeleb2: submission.VoxCeleb2,
+                        IEMOCAP: submission.IEMOCAP,
+                    },
+                    [TrackCollection.VideoOnly]: {
+                        AS_20K: "-",
+                        VGGSound: "-",
+                        Kinetics_Sounds: "-",
+                        UCF101: "-",
+                        LRS3_TED: "-",
+                        VoxCeleb2: "-",
+                        IEMOCAP: "-",
+                    },
+                    [TrackCollection.AudioVisualFusion]: {
+                        AS_20K: "-",
+                        VGGSound: "-",
+                        Kinetics_Sounds: "-",
+                        UCF101: "-",
+                        LRS3_TED: "-",
+                        VoxCeleb2: "-",
+                        IEMOCAP: "-",
+                    }
+                })
             }
-            // fill data
-            audioOnly.forEach((submission) => {
-                if (submission.submitName === submitName) {
-                    data[TrackCollection.AudioOnly].AS_20K = submission.AS_20K;
-                    data[TrackCollection.AudioOnly].VGGSound = submission.VGGSound;
-                    data[TrackCollection.AudioOnly].Kinetics_Sounds = submission.Kinetics_Sounds;
-                    data[TrackCollection.AudioOnly].UCF101 = submission.UCF101;
-                    data[TrackCollection.AudioOnly].LRS3_TED = submission.LRS3_TED;
-                    data[TrackCollection.AudioOnly].VoxCeleb2 = submission.VoxCeleb2;
-                    data[TrackCollection.AudioOnly].IEMOCAP = submission.IEMOCAP;
-                }
-            })
-            videoOnly.forEach((submission) => {
-                if (submission.submitName === submitName) {
-                    data[TrackCollection.VideoOnly].AS_20K = submission.AS_20K;
-                    data[TrackCollection.VideoOnly].VGGSound = submission.VGGSound;
-                    data[TrackCollection.VideoOnly].Kinetics_Sounds = submission.Kinetics_Sounds;
-                    data[TrackCollection.VideoOnly].UCF101 = submission.UCF101;
-                    data[TrackCollection.VideoOnly].LRS3_TED = submission.LRS3_TED;
-                    data[TrackCollection.VideoOnly].VoxCeleb2 = submission.VoxCeleb2;
-                    data[TrackCollection.VideoOnly].IEMOCAP = submission.IEMOCAP;
-                }
-            })
-            audioVisualFusion.forEach((submission) => {
-                if (submission.submitName === submitName) {
-                    data[TrackCollection.AudioVisualFusion].AS_20K = submission.AS_20K;
-                    data[TrackCollection.AudioVisualFusion].VGGSound = submission.VGGSound;
-                    data[TrackCollection.AudioVisualFusion].Kinetics_Sounds = submission.Kinetics_Sounds;
-                    data[TrackCollection.AudioVisualFusion].UCF101 = submission.UCF101;
-                    data[TrackCollection.AudioVisualFusion].LRS3_TED = submission.LRS3_TED;
-                    data[TrackCollection.AudioVisualFusion].VoxCeleb2 = submission.VoxCeleb2;
-                    data[TrackCollection.AudioVisualFusion].IEMOCAP = submission.IEMOCAP;
-                }
-            })
-            return data;
         })
+        videoOnly.forEach((submission) => {
+            if (!submitDict.has(submission.submitUUID)) {
+                submitDict.set(submission.submitUUID, {
+                    paramShared: submission.paramShared,
+                    submitName: submission.submitName,
+                    submitUUID: submission.submitUUID,
+                    [TrackCollection.AudioOnly]: {
+                        AS_20K: "-",
+                        VGGSound: "-",
+                        Kinetics_Sounds: "-",
+                        UCF101: "-",
+                        LRS3_TED: "-",
+                        VoxCeleb2: "-",
+                        IEMOCAP: "-",
+                    },
+                    [TrackCollection.VideoOnly]: {
+                        AS_20K: submission.AS_20K,
+                        VGGSound: submission.VGGSound,
+                        Kinetics_Sounds: submission.Kinetics_Sounds,
+                        UCF101: submission.UCF101,
+                        LRS3_TED: submission.LRS3_TED,
+                        VoxCeleb2: submission.VoxCeleb2,
+                        IEMOCAP: submission.IEMOCAP,
+                    },
+                    [TrackCollection.AudioVisualFusion]: {
+                        AS_20K: "-",
+                        VGGSound: "-",
+                        Kinetics_Sounds: "-",
+                        UCF101: "-",
+                        LRS3_TED: "-",
+                        VoxCeleb2: "-",
+                        IEMOCAP: "-",
+                    }
+                })
+            }
+        })
+        audioVisualFusion.forEach((submission) => {
+            if (!submitDict.has(submission.submitUUID)) {
+                submitDict.set(submission.submitUUID, {
+                    paramShared: submission.paramShared,
+                    submitName: submission.submitName,
+                    submitUUID: submission.submitUUID,
+                    [TrackCollection.AudioOnly]: {
+                        AS_20K: "-",
+                        VGGSound: "-",
+                        Kinetics_Sounds: "-",
+                        UCF101: "-",
+                        LRS3_TED: "-",
+                        VoxCeleb2: "-",
+                        IEMOCAP: "-",
+                    },
+                    [TrackCollection.VideoOnly]: {
+                        AS_20K: "-",
+                        VGGSound: "-",
+                        Kinetics_Sounds: "-",
+                        UCF101: "-",
+                        LRS3_TED: "-",
+                        VoxCeleb2: "-",
+                        IEMOCAP: "-",
+                    },
+                    [TrackCollection.AudioVisualFusion]: {
+                        AS_20K: submission.AS_20K,
+                        VGGSound: submission.VGGSound,
+                        Kinetics_Sounds: submission.Kinetics_Sounds,
+                        UCF101: submission.UCF101,
+                        LRS3_TED: submission.LRS3_TED,
+                        VoxCeleb2: submission.VoxCeleb2,
+                        IEMOCAP: submission.IEMOCAP,
+                    }
+                })
+            }
+        })
+        const data = Array.from(submitDict.values());
 
         setAllData(data);
     }, [audioOnly, videoOnly, audioVisualFusion]);

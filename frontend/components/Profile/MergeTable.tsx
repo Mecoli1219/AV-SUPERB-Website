@@ -90,12 +90,12 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                 <div className="rounded-full text-lg cursor-pointer py-2" onClick={() => setShowOnLeaderboard(submission["submitUUID"])}>
                     {
                         data === "NO" ? <svg width="20px" height="20px" viewBox="0 0 24 24" className="m-auto" xmlns="http://www.w3.org/2000/svg" fill="#000000">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="4.8">
-                                <rect fill="#f9fbff" stroke-width="1" stroke="#868c8f" x="0.5" y="0.5" width="23" height="23" rx="5.5"></rect>
+                            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                            <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" stroke="#CCCCCC" strokeWidth="4.8">
+                                <rect fill="#f9fbff" strokeWidth="1" stroke="#868c8f" x="0.5" y="0.5" width="23" height="23" rx="5.5"></rect>
                             </g>
                             <g id="SVGRepo_iconCarrier">
-                                <rect fill="#f9fbff" stroke-width="1" stroke="#868c8f" x="0.5" y="0.5" width="23" height="23" rx="5.5"></rect> </g></svg>
+                                <rect fill="#f9fbff" strokeWidth="1" stroke="#868c8f" x="0.5" y="0.5" width="23" height="23" rx="5.5"></rect> </g></svg>
                             : <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 1024 1024" className="m-auto" fill="#43A047">
                                 <path d="M866.133333 258.133333L362.666667 761.6l-204.8-204.8L98.133333 618.666667 362.666667 881.066667l563.2-563.2z" />
                             </svg>
@@ -113,8 +113,8 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
         const submitDict = new Map<string, MergeInfoSubmission>();
 
         audioOnly.forEach((submission) => {
-            if (!submitDict.has(submission.aoeTimeUpload.getTime().toString())) {
-                submitDict.set(submission.aoeTimeUpload.getTime().toString(), {
+            if (!submitDict.has(submission.submitUUID)) {
+                submitDict.set(submission.submitUUID, {
                     paramShared: submission.paramShared,
                     submitName: submission.submitName,
                     aoeTimeUpload: submission.aoeTimeUpload,
@@ -152,7 +152,7 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                     }
                 });
             } else {
-                const data: MergeInfoSubmission = submitDict.get(submission.aoeTimeUpload.getTime().toString()) as MergeInfoSubmission;
+                const data: MergeInfoSubmission = submitDict.get(submission.submitUUID) as MergeInfoSubmission;
                 data[TrackCollection.AudioOnly].AS_20K = submission.AS_20K;
                 data[TrackCollection.AudioOnly].VGGSound = submission.VGGSound;
                 data[TrackCollection.AudioOnly].Kinetics_Sounds = submission.Kinetics_Sounds;
@@ -164,8 +164,8 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
         });
 
         videoOnly.forEach((submission) => {
-            if (!submitDict.has(submission.aoeTimeUpload.getTime().toString())) {
-                submitDict.set(submission.aoeTimeUpload.getTime().toString(), {
+            if (!submitDict.has(submission.submitUUID)) {
+                submitDict.set(submission.submitUUID, {
                     paramShared: submission.paramShared,
                     submitName: submission.submitName,
                     aoeTimeUpload: submission.aoeTimeUpload,
@@ -203,7 +203,7 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                     }
                 });
             } else {
-                const data: MergeInfoSubmission = submitDict.get(submission.aoeTimeUpload.getTime().toString()) as MergeInfoSubmission;
+                const data: MergeInfoSubmission = submitDict.get(submission.submitUUID) as MergeInfoSubmission;
                 data[TrackCollection.VideoOnly].AS_20K = submission.AS_20K;
                 data[TrackCollection.VideoOnly].VGGSound = submission.VGGSound;
                 data[TrackCollection.VideoOnly].Kinetics_Sounds = submission.Kinetics_Sounds;
@@ -215,8 +215,8 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
         });
 
         audioVisualFusion.forEach((submission) => {
-            if (!submitDict.has(submission.aoeTimeUpload.getTime().toString())) {
-                submitDict.set(submission.aoeTimeUpload.getTime().toString(), {
+            if (!submitDict.has(submission.submitUUID)) {
+                submitDict.set(submission.submitUUID, {
                     paramShared: submission.paramShared,
                     submitName: submission.submitName,
                     aoeTimeUpload: submission.aoeTimeUpload,
@@ -254,7 +254,7 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                     }
                 });
             } else {
-                const data: MergeInfoSubmission = submitDict.get(submission.aoeTimeUpload.getTime().toString()) as MergeInfoSubmission;
+                const data: MergeInfoSubmission = submitDict.get(submission.submitUUID) as MergeInfoSubmission;
                 data[TrackCollection.AudioVisualFusion].AS_20K = submission.AS_20K;
                 data[TrackCollection.AudioVisualFusion].VGGSound = submission.VGGSound;
                 data[TrackCollection.AudioVisualFusion].Kinetics_Sounds = submission.Kinetics_Sounds;
@@ -423,7 +423,12 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                                         MERGE_SHOWN_VALUES.map(([key, value, evalKey, upward]) => parseData(submission, key))
                                     }
                                     <td className="px-6 py-4 border-b cursor-pointer" onClick={() => downloadPreviousUpload(submission["submitUUID"])}>
-                                        <svg width="20px" height="20px" viewBox="0 0 24 24" className="m-auto" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14 7H16C18.7614 7 21 9.23858 21 12C21 14.7614 18.7614 17 16 17H14M10 7H8C5.23858 7 3 9.23858 3 12C3 14.7614 5.23858 17 8 17H10M8 12H16" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" className="m-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier">
+                                                <path d="M14 7H16C18.7614 7 21 9.23858 21 12C21 14.7614 18.7614 17 16 17H14M10 7H8C5.23858 7 3 9.23858 3 12C3 14.7614 5.23858 17 8 17H10M8 12H16" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                                            </g>
+                                        </svg>
                                     </td>
                                     {
                                         MERGE_DATA_VALUES.map(([key, value, evalKey, upward]) => {

@@ -12,11 +12,13 @@ export interface Submission {
     LRS3_TED: number;
     VoxCeleb2: number;
     IEMOCAP: number;
+    submitUUID: string;
 }
 
 export type MergeSubmission = {
     paramShared: number;
     submitName: string;
+    submitUUID: string;
 } & {
         [key in TrackCollection]: MergeData;
     }

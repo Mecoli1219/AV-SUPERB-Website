@@ -1,8 +1,7 @@
 import React, { useState, useRef } from 'react';
 
-const HoverDescription = ({ description, key }: {
+const HoverDescription = ({ description }: {
     description: string,
-    key: string
 }) => {
     const [isHovered, setIsHovered] = useState(false);
     const hoverTimeoutRef = useRef<number | null>(null);
@@ -19,7 +18,6 @@ const HoverDescription = ({ description, key }: {
         setIsHovered(false);
     };
     return <td
-        key={key}
         className={`px-6 py-4 border-b hover:bg-gray-100 transition-all duration-1000`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

@@ -40,6 +40,7 @@ LEADERBOARD_INFO:
         - modelURL
         - modelDesc
         - paramShared
+        - submitUUID
     SCORE:
         - track
         - AS_20K_map_public

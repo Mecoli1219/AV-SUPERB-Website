@@ -113,16 +113,17 @@ def submission_records_parser(submission_records, configs, mode="individual", co
 def get_leaderboard_default():
     AudioOnly = [
         {
-        "paramShared": 94700000,
-        "submitName": "HuBERT",
-        "AS_20K": 14.3,
-        "VGGSound": 30.21,
-        "Kinetics_Sounds": 51.46,
-        "UCF101": 36.06,
-        "LRS3_TED": 2.96,
-        "VoxCeleb2": 20.29,
-        "IEMOCAP": 62.14
-    },
+            "paramShared": 94700000,
+            "submitName": "HuBERT",
+            "AS_20K": 14.3,
+            "VGGSound": 30.21,
+            "Kinetics_Sounds": 51.46,
+            "UCF101": 36.06,
+            "LRS3_TED": 2.96,
+            "VoxCeleb2": 20.29,
+            "IEMOCAP": 62.14,
+            "submitUUID": "HuBERT-123123"
+        },
         {
             "paramShared": 0,
             "submitName": "AV-HuBERT",
@@ -132,7 +133,8 @@ def get_leaderboard_default():
             "UCF101": 38.58,
             "LRS3_TED": 3.01,
             "VoxCeleb2": 14.71,
-            "IEMOCAP": 58.54
+            "IEMOCAP": 58.54,
+            "submitUUID": "AV-HuBERT-1233321"
         },
         {
             "paramShared": 0,
@@ -143,7 +145,8 @@ def get_leaderboard_default():
             "UCF101": 33.85,
             "LRS3_TED": 66.09,
             "VoxCeleb2": 30.4,
-            "IEMOCAP": 57.53
+            "IEMOCAP": 57.53,
+            "submitUUID": "RepLAI-321123"
         },
         {
             "paramShared": 0,
@@ -154,19 +157,21 @@ def get_leaderboard_default():
             "UCF101": 16.15,
             "LRS3_TED": 84.22,
             "VoxCeleb2": 48.9,
-            "IEMOCAP": 45.8
+            "IEMOCAP": 45.8,
+            "submitUUID": "AVBERT-32133123"
         },
         {
-        "paramShared": 0,
-        "submitName": "MAViL",
-        "AS_20K": 21.6,
-        "VGGSound": 39.91,
-        "Kinetics_Sounds": 57.28,
-        "UCF101": 45.68,
-        "LRS3_TED": 24.43,
-        "VoxCeleb2": 20.83,
-        "IEMOCAP": 59.46
-    }
+            "paramShared": 0,
+            "submitName": "MAViL",
+            "AS_20K": 21.6,
+            "VGGSound": 39.91,
+            "Kinetics_Sounds": 57.28,
+            "UCF101": 45.68,
+            "LRS3_TED": 24.43,
+            "VoxCeleb2": 20.83,
+            "IEMOCAP": 59.46,
+            "submitUUID": "MAViL-3215533123"
+        }
     ]
     VideoOnly = [
         {
@@ -178,7 +183,8 @@ def get_leaderboard_default():
             "UCF101": 37.55,
             "LRS3_TED": 50.91,
             "VoxCeleb2": 17.42,
-            "IEMOCAP": 26.59
+            "IEMOCAP": 26.59,
+            "submitUUID": "AV-HuBERT-1233321"
         },
         {
             "paramShared": 0,
@@ -189,7 +195,8 @@ def get_leaderboard_default():
             "UCF101": 56.69,
             "LRS3_TED": 71.33,
             "VoxCeleb2": 44.44,
-            "IEMOCAP": 40.72
+            "IEMOCAP": 40.72,
+            "submitUUID": "RepLAI-321123"
         },
         {
             "paramShared": 0,
@@ -200,7 +207,8 @@ def get_leaderboard_default():
             "UCF101": 24.69,
             "LRS3_TED": 80.87,
             "VoxCeleb2": 49.63,
-            "IEMOCAP": 33.06
+            "IEMOCAP": 33.06,
+            "submitUUID": "AVBERT-32133123"
         },
         {
             "paramShared": 0,
@@ -211,7 +219,8 @@ def get_leaderboard_default():
             "UCF101": 79.37,
             "LRS3_TED": 74.03,
             "VoxCeleb2": 23.13,
-            "IEMOCAP": 43.03
+            "IEMOCAP": 43.03,
+            "submitUUID": "MAViL-3215533123"
         }
     ]
     AudioVisualFusion = [
@@ -224,7 +233,8 @@ def get_leaderboard_default():
             "UCF101": 41.46,
             "LRS3_TED": 2.75,
             "VoxCeleb2": 14.56,
-            "IEMOCAP": 46.45
+            "IEMOCAP": 46.45,
+            "submitUUID": "AV-HuBERT-1233321"
         },
         {
             "paramShared": 0,
@@ -235,7 +245,8 @@ def get_leaderboard_default():
             "UCF101": 23.46,
             "LRS3_TED": 75.74,
             "VoxCeleb2": 48.78,
-            "IEMOCAP": 46.63
+            "IEMOCAP": 46.63,
+            "submitUUID": "AVBERT-32133123"
         },
         {
             "paramShared": 0,
@@ -246,7 +257,8 @@ def get_leaderboard_default():
             "UCF101": 77.98,
             "LRS3_TED": 30.18,
             "VoxCeleb2": 15.94,
-            "IEMOCAP": 54.94
+            "IEMOCAP": 54.94,
+            "submitUUID": "MAViL-3215533123"
         }
     ]
     
