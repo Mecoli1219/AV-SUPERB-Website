@@ -1,6 +1,7 @@
 import os
 import magic
 from werkzeug.utils import secure_filename
+import zipfile
 
 ALLOWED_EXTENSIONS = {'zip'}
 ALLOWED_MIME_TYPES = {'application/zip', 'application/x-zip-compressed', 'application/x-zip'}
@@ -19,7 +20,10 @@ def zipfile_check(file):
     ):
         # move the cursor to the beginning
         file.stream.seek(0, 0)
-        return True
+        
+        with zipfile.ZipFile(file.stream, 'r') as zip_file:
+            file_list = zip_file.namelist()
+            return 'expert.py' in file_list and 'hubconf.py' in file_list
 
     return False
 

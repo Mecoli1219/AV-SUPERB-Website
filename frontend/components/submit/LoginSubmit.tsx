@@ -125,11 +125,13 @@ const LoginSubmit = ({ token }: { token: string }) => {
             showResult && <SubmitResult setShowResult={setShowResult} success={success} message={message} success_redirect="/profile" />
         }
         <div className="pt-10 text-gray-400">
-            Make sure to read the <Link href="/rules" className="text-blue-400 underline cursor-pointer">Rules</Link> before
+            Make sure to read the <Link href="/" className="text-blue-400 underline cursor-pointer">Rules</Link> before
             submitting to the <Link href="/leaderboard" className="text-blue-400 underline cursor-pointer">SUPERB Benchmark</Link>.
         </div>
         <div className="pt-10 text-gray-400">
-            After your submission, the row of submission will <span className="font-bold italic">only</span> appear on the Profile tab and will not appear in the leaderboard. You can select the &quot;Show&quot; button in the Profile tab to control whether to show it on leaderboard or not.
+            After your submission, the row of submission will <span className="font-bold italic">only</span> appear on
+            the <Link href="/profile" className="text-blue-400 underline cursor-pointer">Profile</Link> tab and will not appear in the leaderboard.
+            You can select the &quot;Show&quot; button in the Profile tab to control whether to show it on leaderboard or not.
         </div>
         <div className="mt-12">
             <Link href={`${BACKEND_URL}/api/download/example`} className="text-red-500 hover:underline cursor-pointer text-sm">Sample submission file</Link>
