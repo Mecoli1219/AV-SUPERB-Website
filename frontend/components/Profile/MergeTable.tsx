@@ -299,7 +299,7 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                                     const color = sortKey && sortKey[0] === key ? sortKey[1] === (direction === -1) ? "green" : "red" : "black";
                                     const textColor = color === "black" ? "text-black" : `text-${color}-600`
                                     return <th scope="row" key={key} rowSpan={3}
-                                        className={`sticky top-0 px-6 py-3 bg-gray-100 border-b ${sortable ? "hover:bg-gray-200 cursor-pointer" : ""}`}
+                                        className={`sticky top-0 px-6 py-3 bg-gray-100 border-b border-r ${sortable ? "hover:bg-gray-200 cursor-pointer" : ""}`}
                                         onClick={sortable ? () => changeSortKey(key, direction) : () => { }}
                                     >
                                         <div className={`flex items-center justify-center ${textColor} `} >
