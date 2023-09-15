@@ -110,6 +110,16 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                         IEMOCAP: "-",
                     }
                 })
+            } else {
+                submitDict.get(submission.submitUUID)![TrackCollection.AudioOnly] = {
+                    AS_20K: submission.AS_20K,
+                    VGGSound: submission.VGGSound,
+                    Kinetics_Sounds: submission.Kinetics_Sounds,
+                    UCF101: submission.UCF101,
+                    LRS3_TED: submission.LRS3_TED,
+                    VoxCeleb2: submission.VoxCeleb2,
+                    IEMOCAP: submission.IEMOCAP,
+                }
             }
         })
         videoOnly.forEach((submission) => {
@@ -146,6 +156,16 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                         IEMOCAP: "-",
                     }
                 })
+            } else {
+                submitDict.get(submission.submitUUID)![TrackCollection.VideoOnly] = {
+                    AS_20K: submission.AS_20K,
+                    VGGSound: submission.VGGSound,
+                    Kinetics_Sounds: submission.Kinetics_Sounds,
+                    UCF101: submission.UCF101,
+                    LRS3_TED: submission.LRS3_TED,
+                    VoxCeleb2: submission.VoxCeleb2,
+                    IEMOCAP: submission.IEMOCAP,
+                }
             }
         })
         audioVisualFusion.forEach((submission) => {
@@ -182,6 +202,16 @@ export const MergeTable = ({ audioOnly, videoOnly, audioVisualFusion, collection
                         IEMOCAP: submission.IEMOCAP,
                     }
                 })
+            } else {
+                submitDict.get(submission.submitUUID)![TrackCollection.AudioVisualFusion] = {
+                    AS_20K: submission.AS_20K,
+                    VGGSound: submission.VGGSound,
+                    Kinetics_Sounds: submission.Kinetics_Sounds,
+                    UCF101: submission.UCF101,
+                    LRS3_TED: submission.LRS3_TED,
+                    VoxCeleb2: submission.VoxCeleb2,
+                    IEMOCAP: submission.IEMOCAP,
+                }
             }
         })
         const data = Array.from(submitDict.values());
